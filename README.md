@@ -13,7 +13,8 @@ create new DATABASE naming 'db_svms'
 ```bash
 php yii migrate
 ```
-open command prompt / CMD
+open command prompt/CMD
+
 cd frontend/web/
 
 ```bash
