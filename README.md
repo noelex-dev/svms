@@ -15,7 +15,7 @@ php yii migrate
 ```
 open command prompt/CMD on proj
 
-cd <project directory> /frontend/web/
+cd {project_directory}/frontend/web
 
 ```bash
 php -S localhost:8080
