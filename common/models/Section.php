@@ -60,7 +60,7 @@ class Section extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasMany(StudentDatum::class, ['section_id' => 'id']);
+        return $this->hasMany(StudentData::class, ['section_id' => 'id']);
     }
 
     /**
@@ -72,5 +72,4 @@ class Section extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TeacherAdvisoryAssignment::class, ['section_id' => 'id']);
     }
-
 }

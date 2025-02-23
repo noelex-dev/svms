@@ -17,7 +17,7 @@ use Yii;
  * @property string|null $special_talent
  * @property string|null $easy_subject
  * @property string|null $hard_subject
- * @property int $4ps_status
+ * @property int $four_p_status
  * @property int $created_at
  * @property int $updated_at
  *
@@ -42,10 +42,10 @@ class StudentInformation extends \yii\db\ActiveRecord
     {
         return [
             [['language', 'height', 'weight', 'early_disease', 'serious_accident', 'hobby', 'special_talent', 'easy_subject', 'hard_subject'], 'default', 'value' => null],
-            [['4ps_status'], 'default', 'value' => 0],
+            [['four_p_status'], 'default', 'value' => 0],
             [['height', 'weight'], 'number'],
             [['early_disease', 'serious_accident'], 'string'],
-            [['4ps_status', 'created_at', 'updated_at'], 'integer'],
+            [['four_p_status', 'created_at', 'updated_at'], 'integer'],
             [['created_at', 'updated_at'], 'required'],
             [['language', 'hobby', 'special_talent', 'easy_subject', 'hard_subject'], 'string', 'max' => 255],
         ];
@@ -67,7 +67,7 @@ class StudentInformation extends \yii\db\ActiveRecord
             'special_talent' => 'Special Talent',
             'easy_subject' => 'Easy Subject',
             'hard_subject' => 'Hard Subject',
-            '4ps_status' => '4ps Status',
+            'four_p_status' => '4ps Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -80,7 +80,6 @@ class StudentInformation extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasMany(StudentDatum::class, ['student_information_id' => 'id']);
+        return $this->hasMany(StudentData::class, ['student_information_id' => 'id']);
     }
-
 }

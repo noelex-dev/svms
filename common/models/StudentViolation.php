@@ -63,7 +63,6 @@ class StudentViolation extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasOne(StudentDatum::class, ['id' => 'student_data_id']);
+        return $this->hasOne(StudentData::class, ['id' => 'student_data_id']);
     }
-
 }

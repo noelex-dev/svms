@@ -60,7 +60,7 @@ class Strand extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasMany(StudentDatum::class, ['strand_id' => 'id']);
+        return $this->hasMany(StudentData::class, ['strand_id' => 'id']);
     }
 
     /**
@@ -72,5 +72,4 @@ class Strand extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TeacherAdvisoryAssignment::class, ['strand_id' => 'id']);
     }
-
 }

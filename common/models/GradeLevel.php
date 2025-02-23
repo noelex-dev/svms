@@ -60,7 +60,7 @@ class GradeLevel extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasMany(StudentDatum::class, ['grade_level_id' => 'id']);
+        return $this->hasMany(StudentData::class, ['grade_level_id' => 'id']);
     }
 
     /**
@@ -72,5 +72,4 @@ class GradeLevel extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TeacherAdvisoryAssignment::class, ['grade_level_id' => 'id']);
     }
-
 }

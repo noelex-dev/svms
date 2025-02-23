@@ -72,7 +72,7 @@ class PersonalInformation extends \yii\db\ActiveRecord
      */
     public function getStudentData()
     {
-        return $this->hasMany(StudentDatum::class, ['personal_information_id' => 'id']);
+        return $this->hasMany(StudentData::class, ['personal_information_id' => 'id']);
     }
 
     /**
@@ -94,5 +94,4 @@ class PersonalInformation extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UserProfile::class, ['personal_information_id' => 'id']);
     }
-
 }
