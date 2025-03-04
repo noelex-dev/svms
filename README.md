@@ -1,5 +1,5 @@
 ```bash
-git init
+php init
 ```
 
 -select 'developer' 
