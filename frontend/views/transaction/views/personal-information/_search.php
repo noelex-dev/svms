@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\searches\PersonalInformationSearch $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="personal-information-search">
@@ -25,13 +22,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ext_name') ?>
 
-    <?php // echo $form->field($model, 'birthdate') ?>
+    <?php // echo $form->field($model, 'birthdate') 
+    ?>
 
-    <?php // echo $form->field($model, 'birthplace') ?>
+    <?php // echo $form->field($model, 'birthplace') 
+    ?>
 
-    <?php // echo $form->field($model, 'created_at') ?>
+    <?php // echo $form->field($model, 'created_at') 
+    ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+    <?php // echo $form->field($model, 'updated_at') 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

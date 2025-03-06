@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\StudentData $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="student-data-form">

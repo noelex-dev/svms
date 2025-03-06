@@ -20,3 +20,7 @@ cd {project_directory}/frontend/web
 ```bash
 php -S localhost:8080
 ```
+
+```bash
+php yii migrate/up --migrationPath=@yii/rbac/migrations
+```

@@ -3,41 +3,19 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "student_information".
- *
- * @property int $id
- * @property string|null $language
- * @property float|null $height
- * @property float|null $weight
- * @property string|null $early_disease
- * @property string|null $serious_accident
- * @property string|null $hobby
- * @property string|null $special_talent
- * @property string|null $easy_subject
- * @property string|null $hard_subject
- * @property int $four_p_status
- * @property int $created_at
- * @property int $updated_at
- *
- * @property StudentDatum[] $studentData
- */
 class StudentInformation extends \yii\db\ActiveRecord
 {
 
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'student_information';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function rules()
     {
         return [
@@ -46,14 +24,23 @@ class StudentInformation extends \yii\db\ActiveRecord
             [['height', 'weight'], 'number'],
             [['early_disease', 'serious_accident'], 'string'],
             [['four_p_status', 'created_at', 'updated_at'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
             [['language', 'hobby', 'special_talent', 'easy_subject', 'hard_subject'], 'string', 'max' => 255],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -73,11 +60,7 @@ class StudentInformation extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[StudentData]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getStudentData()
     {
         return $this->hasMany(StudentData::class, ['student_information_id' => 'id']);

@@ -2,6 +2,7 @@
 
 namespace frontend\assets;
 
+use hail812\adminlte3\assets\AdminLteAsset;
 use yii\web\AssetBundle;
 
 /**
@@ -14,10 +15,10 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
     ];
-    public $js = [
-    ];
+    public $js = [];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
+        AdminLteAsset::class,
     ];
 }

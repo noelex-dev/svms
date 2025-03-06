@@ -3,39 +3,21 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "user_profile".
- *
- * @property int $id
- * @property int $user_id
- * @property int $personal_information_id
- * @property string $role
- * @property int $created_at
- * @property int $updated_at
- *
- * @property PersonalInformation $personalInformation
- * @property User $user
- */
 class UserProfile extends \yii\db\ActiveRecord
 {
 
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'user_profile';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['user_id', 'personal_information_id', 'role', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'personal_information_id', 'role'], 'required'],
             [['user_id', 'personal_information_id', 'created_at', 'updated_at'], 'integer'],
             [['role'], 'string', 'max' => 255],
             [['personal_information_id'], 'exist', 'skipOnError' => true, 'targetClass' => PersonalInformation::class, 'targetAttribute' => ['personal_information_id' => 'id']],
@@ -43,9 +25,19 @@ class UserProfile extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -58,24 +50,14 @@ class UserProfile extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[PersonalInformation]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getPersonalInformation()
     {
         return $this->hasOne(PersonalInformation::class, ['id' => 'personal_information_id']);
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
 }

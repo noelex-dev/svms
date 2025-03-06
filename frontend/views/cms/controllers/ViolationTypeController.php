@@ -8,21 +8,15 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * ViolationTypeController implements the CRUD actions for ViolationType model.
- */
 class ViolationTypeController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class(),
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -31,11 +25,6 @@ class ViolationTypeController extends Controller
         );
     }
 
-    /**
-     * Lists all ViolationType models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new ViolationTypeSearch();
@@ -47,12 +36,6 @@ class ViolationTypeController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single ViolationType model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +43,6 @@ class ViolationTypeController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new ViolationType model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new ViolationType();
@@ -82,13 +60,6 @@ class ViolationTypeController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing ViolationType model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -102,13 +73,6 @@ class ViolationTypeController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing ViolationType model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +80,6 @@ class ViolationTypeController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the ViolationType model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return ViolationType the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = ViolationType::findOne(['id' => $id])) !== null) {

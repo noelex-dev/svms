@@ -3,42 +3,22 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "teacher_advisory_assignment".
- *
- * @property int $id
- * @property int $user_id
- * @property int $grade_level_id
- * @property int $section_id
- * @property int $strand_id
- * @property int $created_at
- * @property int $updated_at
- *
- * @property GradeLevel $gradeLevel
- * @property Section $section
- * @property Strand $strand
- * @property User $user
- */
 class TeacherAdvisoryAssignment extends \yii\db\ActiveRecord
 {
 
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'teacher_advisory_assignment';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function rules()
     {
         return [
-            [['user_id', 'grade_level_id', 'section_id', 'strand_id', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'grade_level_id', 'section_id', 'strand_id'], 'required'],
             [['user_id', 'grade_level_id', 'section_id', 'strand_id', 'created_at', 'updated_at'], 'integer'],
             [['grade_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GradeLevel::class, 'targetAttribute' => ['grade_level_id' => 'id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::class, 'targetAttribute' => ['section_id' => 'id']],
@@ -47,9 +27,19 @@ class TeacherAdvisoryAssignment extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -63,44 +53,24 @@ class TeacherAdvisoryAssignment extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[GradeLevel]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getGradeLevel()
     {
         return $this->hasOne(GradeLevel::class, ['id' => 'grade_level_id']);
     }
 
-    /**
-     * Gets query for [[Section]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getSection()
     {
         return $this->hasOne(Section::class, ['id' => 'section_id']);
     }
 
-    /**
-     * Gets query for [[Strand]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getStrand()
     {
         return $this->hasOne(Strand::class, ['id' => 'strand_id']);
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
 }

@@ -3,45 +3,23 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "user".
- *
- * @property int $id
- * @property string $username
- * @property string $auth_key
- * @property string $password_hash
- * @property string|null $password_reset_token
- * @property string $email
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property string|null $verification_token
- *
- * @property TeacherAdvisoryAssignment[] $teacherAdvisoryAssignments
- * @property UserProfile[] $userProfiles
- */
 class User extends \yii\db\ActiveRecord
 {
 
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['password_reset_token', 'verification_token'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 10],
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -51,9 +29,19 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -70,24 +58,14 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[TeacherAdvisoryAssignments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getTeacherAdvisoryAssignments()
     {
         return $this->hasMany(TeacherAdvisoryAssignment::class, ['user_id' => 'id']);
     }
 
-    /**
-     * Gets query for [[UserProfiles]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getUserProfiles()
     {
         return $this->hasMany(UserProfile::class, ['user_id' => 'id']);
     }
-
 }

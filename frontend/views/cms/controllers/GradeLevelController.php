@@ -8,21 +8,15 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * GradeLevelController implements the CRUD actions for GradeLevel model.
- */
 class GradeLevelController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class(),
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -31,11 +25,6 @@ class GradeLevelController extends Controller
         );
     }
 
-    /**
-     * Lists all GradeLevel models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new GradeLevelSearch();
@@ -47,12 +36,6 @@ class GradeLevelController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single GradeLevel model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +43,6 @@ class GradeLevelController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new GradeLevel model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new GradeLevel();
@@ -82,13 +60,6 @@ class GradeLevelController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing GradeLevel model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -102,13 +73,6 @@ class GradeLevelController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing GradeLevel model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +80,6 @@ class GradeLevelController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the GradeLevel model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return GradeLevel the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = GradeLevel::findOne(['id' => $id])) !== null) {

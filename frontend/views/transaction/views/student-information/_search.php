@@ -2,10 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-/** @var yii\web\View $this */
-/** @var common\models\searches\StudentInformationSearch $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="student-information-search">
@@ -25,21 +21,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'early_disease') ?>
 
-    <?php // echo $form->field($model, 'serious_accident') ?>
+    <?php // echo $form->field($model, 'serious_accident') 
+    ?>
 
-    <?php // echo $form->field($model, 'hobby') ?>
+    <?php // echo $form->field($model, 'hobby') 
+    ?>
 
-    <?php // echo $form->field($model, 'special_talent') ?>
+    <?php // echo $form->field($model, 'special_talent') 
+    ?>
 
-    <?php // echo $form->field($model, 'easy_subject') ?>
+    <?php // echo $form->field($model, 'easy_subject') 
+    ?>
 
-    <?php // echo $form->field($model, 'hard_subject') ?>
+    <?php // echo $form->field($model, 'hard_subject') 
+    ?>
 
-    <?php // echo $form->field($model, '4ps_status') ?>
+    <?php // echo $form->field($model, '4ps_status') 
+    ?>
 
-    <?php // echo $form->field($model, 'created_at') ?>
+    <?php // echo $form->field($model, 'created_at') 
+    ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+    <?php // echo $form->field($model, 'updated_at') 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

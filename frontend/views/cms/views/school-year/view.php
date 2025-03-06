@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var common\models\SchoolYear $model */
-
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'School Years', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,9 +10,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="school-year-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', Yii::$app->request->referrer, ['class' => 'btn btn-secondary']) ?>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -32,10 +28,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'year_start',
             'year_end',
-            'semester_id',
+            [
+                'attribute' => 'semester_id',
+                'value' => function ($model) {
+                    return $model->semester->name;
+                }
+            ],
             'name',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return date('F d, Y | h:i:s A', $model->created_at);
+                }
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return date('F d, Y | h:i:s A', $model->updated_at);
+                }
+            ],
+
         ],
     ]) ?>
 

@@ -2,16 +2,12 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var common\models\ViolationType $model */
 
-$this->title = 'Create Violation Type';
+$this->title = 'Add Violation Type';
 $this->params['breadcrumbs'][] = ['label' => 'Violation Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="violation-type-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

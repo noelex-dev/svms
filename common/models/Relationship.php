@@ -3,32 +3,18 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "relationship".
- *
- * @property int $id
- * @property string $name
- * @property int $created_at
- * @property int $updated_at
- *
- * @property StudentGuardian[] $studentGuardians
- */
 class Relationship extends \yii\db\ActiveRecord
 {
 
 
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'relationship';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -39,9 +25,19 @@ class Relationship extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -52,14 +48,9 @@ class Relationship extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[StudentGuardians]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getStudentGuardians()
     {
         return $this->hasMany(StudentGuardian::class, ['relationship_id' => 'id']);
     }
-
 }

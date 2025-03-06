@@ -3,50 +3,22 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "student_data".
- *
- * @property int $id
- * @property int $personal_information_id
- * @property int $student_information_id
- * @property int|null $guardian_id
- * @property int $student_plan_id
- * @property int $grade_level_id
- * @property int $section_id
- * @property int $strand_id
- * @property int $created_at
- * @property int $updated_at
- *
- * @property GradeLevel $gradeLevel
- * @property StudentGuardian $guardian
- * @property PersonalInformation $personalInformation
- * @property Section $section
- * @property Strand $strand
- * @property StudentInformation $studentInformation
- * @property StudentPlan $studentPlan
- * @property StudentViolation[] $studentViolations
- */
 class StudentData extends \yii\db\ActiveRecord
 {
 
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'student_data';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['guardian_id'], 'default', 'value' => null],
-            [['personal_information_id', 'student_information_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'created_at', 'updated_at'], 'required'],
+            [['personal_information_id', 'student_information_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id'], 'required'],
             [['personal_information_id', 'student_information_id', 'guardian_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'created_at', 'updated_at'], 'integer'],
             [['grade_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GradeLevel::class, 'targetAttribute' => ['grade_level_id' => 'id']],
             [['guardian_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentGuardian::class, 'targetAttribute' => ['guardian_id' => 'id']],
@@ -58,9 +30,19 @@ class StudentData extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -77,84 +59,44 @@ class StudentData extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[GradeLevel]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getGradeLevel()
     {
         return $this->hasOne(GradeLevel::class, ['id' => 'grade_level_id']);
     }
 
-    /**
-     * Gets query for [[Guardian]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getGuardian()
     {
         return $this->hasOne(StudentGuardian::class, ['id' => 'guardian_id']);
     }
 
-    /**
-     * Gets query for [[PersonalInformation]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getPersonalInformation()
     {
         return $this->hasOne(PersonalInformation::class, ['id' => 'personal_information_id']);
     }
 
-    /**
-     * Gets query for [[Section]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getSection()
     {
         return $this->hasOne(Section::class, ['id' => 'section_id']);
     }
 
-    /**
-     * Gets query for [[Strand]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getStrand()
     {
         return $this->hasOne(Strand::class, ['id' => 'strand_id']);
     }
 
-    /**
-     * Gets query for [[StudentInformation]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getStudentInformation()
     {
         return $this->hasOne(StudentInformation::class, ['id' => 'student_information_id']);
     }
 
-    /**
-     * Gets query for [[StudentPlan]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getStudentPlan()
     {
         return $this->hasOne(StudentPlan::class, ['id' => 'student_plan_id']);
     }
 
-    /**
-     * Gets query for [[StudentViolations]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getStudentViolations()
     {
         return $this->hasMany(StudentViolation::class, ['student_data_id' => 'id']);
     }
-
 }

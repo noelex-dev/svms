@@ -3,47 +3,40 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 
-/**
- * This is the model class for table "student_violation".
- *
- * @property int $id
- * @property int $student_data_id
- * @property int $violation_id
- * @property int $notification_status
- * @property int $created_at
- * @property int $updated_at
- *
- * @property StudentDatum $studentData
- */
 class StudentViolation extends \yii\db\ActiveRecord
 {
 
-
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'student_violation';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['notification_status'], 'default', 'value' => 0],
-            [['student_data_id', 'violation_id', 'created_at', 'updated_at'], 'required'],
+            [['student_data_id', 'violation_id'], 'required'],
             [['student_data_id', 'violation_id', 'notification_status', 'created_at', 'updated_at'], 'integer'],
-            [['student_data_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentDatum::class, 'targetAttribute' => ['student_data_id' => 'id']],
+            [['student_data_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentData::class, 'targetAttribute' => ['student_data_id' => 'id']],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -56,11 +49,6 @@ class StudentViolation extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[StudentData]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getStudentData()
     {
         return $this->hasOne(StudentData::class, ['id' => 'student_data_id']);
