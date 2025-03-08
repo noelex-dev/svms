@@ -2,6 +2,7 @@
 
 namespace frontend\views\cms\controllers;
 
+use Yii;
 use common\models\GradeLevel;
 use common\models\searches\GradeLevelSearch;
 use yii\web\Controller;
@@ -55,9 +56,11 @@ class GradeLevelController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', ['model' => $model]);
+        } else {
+            return $this->render('create', ['model' => $model]);
+        }
     }
 
     public function actionUpdate($id)

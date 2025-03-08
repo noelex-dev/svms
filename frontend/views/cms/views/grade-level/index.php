@@ -1,10 +1,13 @@
 <?php
 
 use common\models\GradeLevel;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+
+echo $this->render('@frontend/views/_components/_modal');
 
 $this->title = 'Grade Levels';
 $this->params['breadcrumbs'][] = $this->title;
@@ -12,7 +15,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="grade-level-index">
 
     <p>
-        <?= Html::a('Add', ['create'], ['class' => 'btn btn-success px-5 bg-maroon']) ?>
+        <?= Html::a('Add', '#', [
+            'class' => 'btn btn-primary bg-maroon px-5',
+            'id' => 'modalButton',
+            'data-title' => 'Grade Level Details',
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-handshake-angle styled-icon',
+            'data-url' => Url::to(['/cms/grade-level/create']),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
+        ]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 

@@ -29,7 +29,10 @@
         "phpoffice/phpspreadsheet": "dev-master",
         "kartik-v/yii2-widgets": "*",
         "kartik-v/yii2-mpdf": "dev-master",
-        "kartik-v/yii2-date-range": "dev-master"
+        "kartik-v/yii2-date-range": "dev-master",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "yiisoft/yii2-bootstrap": "^2.0@beta"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
