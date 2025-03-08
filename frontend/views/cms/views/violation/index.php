@@ -5,7 +5,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\bootstrap4\Modal;
 
+echo $this->render('@frontend/views/_components/_modal');
 
 $this->title = 'Violations';
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,7 +15,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="violation-index">
 
     <p>
-        <?= Html::a('Add', ['create'], ['class' => 'btn btn-success px-5 bg-maroon']) ?>
+        <?= Html::a('Add', '#', [
+            'class' => 'btn btn-primary bg-maroon px-5',
+            'id' => 'modalButton',
+            'data-title' => 'Add Violation',
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-exclamation-triangle',
+            'data-url' => Url::to(['/cms/violation/create']),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
+        ]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -46,9 +59,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                     'update' => function ($url, Violation $model, $key) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>', $url, [
-                            'title' => Yii::t('yii', 'Update'),
+                        return Html::a('<i class="fas fa-pencil-alt"></i>', '#', [
                             'class' => 'btn btn-sm btn-primary',
+                            'id' => 'modalButton',
+                            'data-title' => 'Update Violation: ' . $model->name,
+                            'data-subtitle' => 'Please fill up the details below.',
+                            'data-icon' => 'fas fa-exclamation-triangle',
+                            'data-url' => Url::to(['/cms/violation/update', 'id' => $model->id]),
+                            'data-type' => 'POST',
+                            'data-width' => Modal::SIZE_LARGE,
+                            'data-toggle' => 'modal',
+                            'data-target' => '#svmsModal',
                         ]);
                     },
                     'delete' => function ($url, Violation $model, $key) {

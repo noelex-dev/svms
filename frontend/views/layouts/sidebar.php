@@ -60,7 +60,7 @@
                             [
                                 'label' => 'Section',
                                 'url' => ['/cms/section/index'],
-                                'icon' => 'fas fa-users'
+                                'icon' => 'fas fa-users-viewfinder'
                             ],
                             [
                                 'label' => 'Relationship Type',
@@ -68,15 +68,16 @@
                                 'icon' => 'fas fa-people-arrows'
                             ],
                             [
-                                'label' => 'Violation',
-                                'url' => ['/cms/violation/index'],
-                                'icon' => 'fas fa-exclamation-triangle'
-                            ],
-                            [
                                 'label' => 'Violation Type',
                                 'url' => ['/cms/violation-type/index'],
                                 'icon' => 'fas fa-exclamation-circle'
                             ],
+                            [
+                                'label' => 'Violation',
+                                'url' => ['/cms/violation/index'],
+                                'icon' => 'fas fa-exclamation-triangle'
+                            ],
+
                         ]
                     ],
                     // ['template' => '<div class="dropdown-divider"></div>'],

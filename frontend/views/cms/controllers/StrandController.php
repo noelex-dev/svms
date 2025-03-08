@@ -8,14 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * StrandController implements the CRUD actions for Strand model.
- */
 class StrandController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +25,6 @@ class StrandController extends Controller
         );
     }
 
-    /**
-     * Lists all Strand models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new StrandSearch();
@@ -47,12 +36,6 @@ class StrandController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Strand model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +43,6 @@ class StrandController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Strand model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Strand();
@@ -77,18 +55,11 @@ class StrandController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Updates an existing Strand model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -97,18 +68,11 @@ class StrandController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Deletes an existing Strand model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +80,6 @@ class StrandController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Strand model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Strand the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Strand::findOne(['id' => $id])) !== null) {

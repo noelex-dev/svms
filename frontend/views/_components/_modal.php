@@ -4,11 +4,11 @@
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="margin: 0 !important;">
-                <div class="modal-header">
+                <div class="modal-header px-0 pt-0">
                     <div class="modal-title w-100" id="ModalLabel">
                         <div class="d-flex align-items-center">
                             <i id="svmsModalIcon" class="styled-icon"></i>
-                            <div class="ml-1">
+                            <div class="ml-3">
                                 <div>
                                     <h5 class="mb-0" id="svmsModalTitle">
                                         <!-- MODAL TITLE HERE -->

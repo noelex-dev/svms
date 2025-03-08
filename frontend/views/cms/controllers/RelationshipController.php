@@ -8,14 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * RelationshipController implements the CRUD actions for Relationship model.
- */
 class RelationshipController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +25,6 @@ class RelationshipController extends Controller
         );
     }
 
-    /**
-     * Lists all Relationship models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new RelationshipSearch();
@@ -47,12 +36,6 @@ class RelationshipController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Relationship model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +43,6 @@ class RelationshipController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Relationship model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Relationship();
@@ -77,18 +55,11 @@ class RelationshipController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Updates an existing Relationship model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -97,18 +68,11 @@ class RelationshipController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Deletes an existing Relationship model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +80,6 @@ class RelationshipController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Relationship model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Relationship the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Relationship::findOne(['id' => $id])) !== null) {

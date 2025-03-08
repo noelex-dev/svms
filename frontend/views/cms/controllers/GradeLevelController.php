@@ -56,11 +56,9 @@ class GradeLevelController extends Controller
             $model->loadDefaultValues();
         }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_form', ['model' => $model]);
-        } else {
-            return $this->render('create', ['model' => $model]);
-        }
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdate($id)
@@ -71,7 +69,7 @@ class GradeLevelController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
