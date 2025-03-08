@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap4\Modal;
+
+echo $this->render('@frontend/views/_components/_modal');
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Violation Types', 'url' => ['index']];
@@ -11,8 +15,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="violation-type-view">
 
     <p>
-        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', Yii::$app->request->referrer, ['class' => 'btn btn-secondary']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/violation-type/index', ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('Update', '#', [
+            'class' => 'btn btn-primary',
+            'id' => 'modalButton',
+            'data-title' => 'Update Violation Type: ' . $model->name,
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-exclamation-circle',
+            'data-url' => Url::to(['/cms/violation-type/update', 'id' => $model->id]),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
+        ]); ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
