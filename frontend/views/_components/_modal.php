@@ -1,8 +1,7 @@
-<!-- MODAL -->
 <div class="site-modal">
     <div class="modal fade" id="svmsModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content" style="margin: 0 !important;">
                 <div class="modal-header px-0 pt-0">
                     <div class="modal-title w-100" id="ModalLabel">
@@ -11,7 +10,6 @@
                             <div class="ml-3">
                                 <div>
                                     <h5 class="mb-0" id="svmsModalTitle">
-                                        <!-- MODAL TITLE HERE -->
                                     </h5>
                                     <small id="svmsModalSubtitle" class="text-muted"></small>
                                 </div>
@@ -23,7 +21,6 @@
                     </div>
                 </div>
                 <div id="svmsModalContent">
-                    <!-- Ajax content will be loaded here -->
                 </div>
             </div>
         </div>

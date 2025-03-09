@@ -19,6 +19,7 @@ class StudentInformation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['language', 'height', 'weight', 'four_p_status'], 'required'],
             [['language', 'height', 'weight', 'early_disease', 'serious_accident', 'hobby', 'special_talent', 'easy_subject', 'hard_subject'], 'default', 'value' => null],
             [['four_p_status'], 'default', 'value' => 0],
             [['height', 'weight'], 'number'],
@@ -46,8 +47,8 @@ class StudentInformation extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'language' => 'Language',
-            'height' => 'Height',
-            'weight' => 'Weight',
+            'height' => 'Height (cm)',
+            'weight' => 'Weight (kg)',
             'early_disease' => 'Early Disease',
             'serious_accident' => 'Serious Accident',
             'hobby' => 'Hobby',

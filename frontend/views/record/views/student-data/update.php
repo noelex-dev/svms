@@ -3,15 +3,20 @@
 use yii\helpers\Html;
 
 
-$this->title = 'Update Student Data: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Student Datas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Update Student Data: ' . $studentDataModel->personalInformation->fullName;
+$this->params['breadcrumbs'][] = ['label' => 'Student Data', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $studentDataModel->id, 'url' => ['view', 'id' => $studentDataModel->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="student-data-update">
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'studentDataModel' => $studentDataModel,
+        'personalInformationModel' => $personalInformationModel,
+        'studentInformationModel' => $studentInformationModel,
+        'studentPlanModel' => $studentPlanModel,
+        'studentGuardianModel' => $studentGuardianModel,
+        'guardianPersonalInformationModel' => $guardianPersonalInformationModel,
     ]) ?>
 
 </div>

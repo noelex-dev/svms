@@ -31,7 +31,7 @@
                         'url' => '#',
                         'icon' => 'fas fa-chart-line',
                     ],
-                    // ['template' => '<div class="dropdown-divider p-0 b-0"></div>'],
+                    ['template' => '<div class="dropdown-divider p-0 b-0"></div>'],
                     [
                         'label' => 'Content Management',
                         'icon' => 'fas fa-cogs',
@@ -80,24 +80,24 @@
 
                         ]
                     ],
-                    // ['template' => '<div class="dropdown-divider"></div>'],
+                    ['template' => '<div class="dropdown-divider"></div>'],
                     [
                         'label' => 'Records',
                         'icon' => 'fas fa-laptop',
                         'items' => [
                             [
                                 'label' => 'Students',
-                                'url' => ['#'],
+                                'url' => ['/record/student-data/index'],
                                 'icon' => 'fas fa-user-graduate'
                             ],
                             [
                                 'label' => 'Student Violation',
-                                'url' => ['#'],
+                                'url' => ['/record/student-violation/index'],
                                 'icon' => 'fas fa-user-times'
                             ],
                             [
                                 'label' => 'Teacher Advisory',
-                                'url' => ['#'],
+                                'url' => ['/record/teacher-advisory-assignment/index'],
                                 'icon' => 'fas fa-chalkboard-teacher'
                             ],
                         ]

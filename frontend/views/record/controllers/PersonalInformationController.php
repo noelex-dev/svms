@@ -8,14 +8,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * PersonalInformationController implements the CRUD actions for PersonalInformation model.
- */
 class PersonalInformationController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +26,6 @@ class PersonalInformationController extends Controller
         );
     }
 
-    /**
-     * Lists all PersonalInformation models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new PersonalInformationSearch();
@@ -47,12 +37,6 @@ class PersonalInformationController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single PersonalInformation model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +44,6 @@ class PersonalInformationController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new PersonalInformation model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new PersonalInformation();
@@ -82,13 +61,6 @@ class PersonalInformationController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing PersonalInformation model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -102,13 +74,6 @@ class PersonalInformationController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing PersonalInformation model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +81,6 @@ class PersonalInformationController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the PersonalInformation model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return PersonalInformation the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = PersonalInformation::findOne(['id' => $id])) !== null) {

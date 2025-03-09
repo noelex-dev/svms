@@ -2,20 +2,20 @@
 
 namespace frontend\views\record\controllers;
 
+use common\models\PersonalInformation;
 use common\models\StudentData;
 use common\models\searches\StudentDataSearch;
+use common\models\StudentGuardian;
+use common\models\StudentInformation;
+use common\models\StudentPlan;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * StudentDataController implements the CRUD actions for StudentData model.
- */
 class StudentDataController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +31,6 @@ class StudentDataController extends Controller
         );
     }
 
-    /**
-     * Lists all StudentData models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new StudentDataSearch();
@@ -47,12 +42,6 @@ class StudentDataController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single StudentData model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,55 +49,121 @@ class StudentDataController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new StudentData model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
-        $model = new StudentData();
+        $studentDataModel = new StudentData();
+        $personalInformationModel = new PersonalInformation();
+        $studentInformationModel = new StudentInformation();
+        $studentPlanModel = new StudentPlan();
+        $studentGuardianModel = new StudentGuardian();
+        $guardianPersonalInformationModel = new PersonalInformation();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if (
+            $studentDataModel->load(Yii::$app->request->post()) &&
+            $personalInformationModel->load(Yii::$app->request->post()) &&
+            $studentInformationModel->load(Yii::$app->request->post()) &&
+            $studentPlanModel->load(Yii::$app->request->post()) &&
+            $studentGuardianModel->load(Yii::$app->request->post()) &&
+            $guardianPersonalInformationModel->load(Yii::$app->request->post())
+        ) {
+
+            $isValid = $studentDataModel->validate();
+            $isValid = $personalInformationModel->validate() && $isValid;
+            $isValid = $studentInformationModel->validate() && $isValid;
+            $isValid = $studentPlanModel->validate() && $isValid;
+            $isValid = $studentGuardianModel->validate() && $isValid;
+            $isValid = $guardianPersonalInformationModel->validate() && $isValid;
+
+            if ($isValid) {
+                $personalInformationModel->save(false);
+                $studentInformationModel->save(false);
+                $studentPlanModel->save(false);
+                $guardianPersonalInformationModel->save(false);
+
+                // Set the guardian's personal information ID
+                $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
+                $studentGuardianModel->save(false);
+
+                // Set the foreign keys in StudentData
+                $studentDataModel->personal_information_id = $personalInformationModel->id;
+                $studentDataModel->student_information_id = $studentInformationModel->id;
+                $studentDataModel->student_plan_id = $studentPlanModel->id;
+                $studentDataModel->guardian_id = $studentGuardianModel->id;
+
+                $studentDataModel->save(false);
+
+                return $this->redirect(['view', 'id' => $studentDataModel->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        return $this->renderAjax('create', [
+            'studentDataModel' => $studentDataModel,
+            'personalInformationModel' => $personalInformationModel,
+            'studentInformationModel' => $studentInformationModel,
+            'studentPlanModel' => $studentPlanModel,
+            'studentGuardianModel' => $studentGuardianModel,
+            'guardianPersonalInformationModel' => $guardianPersonalInformationModel,
         ]);
     }
 
-    /**
-     * Updates an existing StudentData model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $studentDataModel = $this->findModel($id); // Assuming you have a findModel function
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $personalInformationModel = PersonalInformation::findOne($studentDataModel->personal_information_id);
+        $studentInformationModel = StudentInformation::findOne($studentDataModel->student_information_id);
+        $studentPlanModel = StudentPlan::findOne($studentDataModel->student_plan_id);
+        $studentGuardianModel = StudentGuardian::findOne($studentDataModel->guardian_id);
+        $guardianPersonalInformationModel = PersonalInformation::findOne($studentGuardianModel->personal_information_id);
+
+        if (
+            $studentDataModel->load(Yii::$app->request->post()) &&
+            $personalInformationModel->load(Yii::$app->request->post()) &&
+            $studentInformationModel->load(Yii::$app->request->post()) &&
+            $studentPlanModel->load(Yii::$app->request->post()) &&
+            $studentGuardianModel->load(Yii::$app->request->post()) &&
+            $guardianPersonalInformationModel->load(Yii::$app->request->post())
+        ) {
+            $isValid = $studentDataModel->validate();
+            $isValid = $personalInformationModel->validate() && $isValid;
+            $isValid = $studentInformationModel->validate() && $isValid;
+            $isValid = $studentPlanModel->validate() && $isValid;
+            $isValid = $studentGuardianModel->validate() && $isValid;
+            $isValid = $guardianPersonalInformationModel->validate() && $isValid;
+
+            if ($isValid) {
+                $personalInformationModel->save(false);
+                $studentInformationModel->save(false);
+                $studentPlanModel->save(false);
+                $guardianPersonalInformationModel->save(false);
+
+                // Set the guardian's personal information ID (in case it changed)
+                $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
+                $studentGuardianModel->save(false);
+
+                // Set the foreign keys in StudentData (in case they changed)
+                $studentDataModel->personal_information_id = $personalInformationModel->id;
+                $studentDataModel->student_information_id = $studentInformationModel->id;
+                $studentDataModel->student_plan_id = $studentPlanModel->id;
+                $studentDataModel->guardian_id = $studentGuardianModel->id;
+
+                $studentDataModel->save(false);
+
+                return $this->redirect(['view', 'id' => $studentDataModel->id]);
+            }
         }
 
-        return $this->render('update', [
-            'model' => $model,
+        return $this->renderAjax('update', [
+            'studentDataModel' => $studentDataModel,
+            'personalInformationModel' => $personalInformationModel,
+            'studentInformationModel' => $studentInformationModel,
+            'studentPlanModel' => $studentPlanModel,
+            'studentGuardianModel' => $studentGuardianModel,
+            'guardianPersonalInformationModel' => $guardianPersonalInformationModel,
         ]);
     }
 
-    /**
-     * Deletes an existing StudentData model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +171,6 @@ class StudentDataController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the StudentData model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return StudentData the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = StudentData::findOne(['id' => $id])) !== null) {

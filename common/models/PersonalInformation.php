@@ -68,4 +68,14 @@ class PersonalInformation extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UserProfile::class, ['personal_information_id' => 'id']);
     }
+
+    public function getFullName()
+    {
+        $firstName = $this->first_name;
+        $middleName = $this->middle_name ? ' ' . $this->middle_name : '';
+        $lastName = ' ' . $this->last_name;
+        $extName = $this->ext_name ? ' ' . $this->ext_name : '';
+
+        return $firstName . $middleName . $lastName . $extName;
+    }
 }

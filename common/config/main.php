@@ -21,8 +21,8 @@ return [
         'cms' => [
             'class' => 'frontend\views\cms\Module',
         ],
-        'transaction' => [
-            'class' => 'frontend\views\transaction\Module',
+        'record' => [
+            'class' => 'frontend\views\record\Module',
         ],
     ],
     'timeZone' => 'Asia/Manila',

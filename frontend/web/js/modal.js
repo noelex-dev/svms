@@ -9,13 +9,21 @@ $(document).ready(function () {
         var type = target.data('type');
         var width = target.data('width');
 
-        $('#svmsModal .modal-lg').css('max-width', '');
+        var modalDialog = $('#svmsModal .modal-dialog');
+
+        modalDialog.removeClass('modal-sm modal-lg modal-xl');
+
         $('#svmsModalTitle').text('');
         $('#svmsModalIcon').attr('class', 'styled-icon');
         $('#svmsModalSubtitle').text('');
         $('#svmsModalContent').html('');
 
-        $('#svmsModal .modal-lg').css('max-width', width);
+        if (width === 'modal-sm' || width === 'modal-lg' || width === 'modal-xl') {
+            modalDialog.addClass(width);
+        } else if (width) {
+            modalDialog.css('max-width', width);
+        }
+
         $('#svmsModalTitle').text(title);
         $('#svmsModalIcon').addClass(icon);
         $('#svmsModalSubtitle').text(subtitle);
