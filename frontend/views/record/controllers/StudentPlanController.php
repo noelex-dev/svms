@@ -1,17 +1,17 @@
 <?php
 
-namespace frontend\views\transaction\controllers;
+namespace frontend\views\record\controllers;
 
-use common\models\StudentGuardian;
-use common\models\searches\StudentGuardianSearch;
+use common\models\StudentPlan;
+use common\models\searches\StudentPlanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StudentGuardianController implements the CRUD actions for StudentGuardian model.
+ * StudentPlanController implements the CRUD actions for StudentPlan model.
  */
-class StudentGuardianController extends Controller
+class StudentPlanController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Lists all StudentGuardian models.
+     * Lists all StudentPlan models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new StudentGuardianSearch();
+        $searchModel = new StudentPlanSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Displays a single StudentGuardian model.
+     * Displays a single StudentPlan model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Creates a new StudentGuardian model.
+     * Creates a new StudentPlan model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new StudentGuardian();
+        $model = new StudentPlan();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Updates an existing StudentGuardian model.
+     * Updates an existing StudentPlan model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Deletes an existing StudentGuardian model.
+     * Deletes an existing StudentPlan model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class StudentGuardianController extends Controller
     }
 
     /**
-     * Finds the StudentGuardian model based on its primary key value.
+     * Finds the StudentPlan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return StudentGuardian the loaded model
+     * @return StudentPlan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StudentGuardian::findOne(['id' => $id])) !== null) {
+        if (($model = StudentPlan::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

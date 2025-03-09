@@ -1,3 +1,10 @@
+:root {
+    --maroon-color: #CD5C5C;
+    --maroon-hover: #DC143C;
+    --maroon-active: #CD5C5C;
+}
+
+/* modal */
 .modal {
     display: none;
     position: fixed;
@@ -42,4 +49,30 @@
     color: #ffffff;
     border-radius: 15%;
     font-size: 24px;
+}
+
+
+/* pagination */
+.pagination .page-link {
+    background-color: white;
+    color: var(--maroon-color);
+    border: 1px solid var(--maroon-color);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--maroon-hover);
+    color: white;
+    border-color: var(--maroon-hover);
+}
+
+.pagination .active .page-link {
+    background-color: var(--maroon-active) !important;
+    color: white !important;
+    border-color: var(--maroon-active) !important;
+}
+
+.pagination .disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+    border-color: #ccc;
 }

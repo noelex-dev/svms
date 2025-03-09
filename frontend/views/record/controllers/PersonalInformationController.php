@@ -1,17 +1,17 @@
 <?php
 
-namespace frontend\views\transaction\controllers;
+namespace frontend\views\record\controllers;
 
-use common\models\StudentInformation;
-use common\models\searches\StudentInformationSearch;
+use common\models\PersonalInformation;
+use common\models\searches\PersonalInformationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StudentInformationController implements the CRUD actions for StudentInformation model.
+ * PersonalInformationController implements the CRUD actions for PersonalInformation model.
  */
-class StudentInformationController extends Controller
+class PersonalInformationController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Lists all StudentInformation models.
+     * Lists all PersonalInformation models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new StudentInformationSearch();
+        $searchModel = new PersonalInformationSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Displays a single StudentInformation model.
+     * Displays a single PersonalInformation model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Creates a new StudentInformation model.
+     * Creates a new PersonalInformation model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new StudentInformation();
+        $model = new PersonalInformation();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Updates an existing StudentInformation model.
+     * Updates an existing PersonalInformation model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Deletes an existing StudentInformation model.
+     * Deletes an existing PersonalInformation model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class StudentInformationController extends Controller
     }
 
     /**
-     * Finds the StudentInformation model based on its primary key value.
+     * Finds the PersonalInformation model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return StudentInformation the loaded model
+     * @return PersonalInformation the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StudentInformation::findOne(['id' => $id])) !== null) {
+        if (($model = PersonalInformation::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

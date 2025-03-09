@@ -1,17 +1,17 @@
 <?php
 
-namespace frontend\views\transaction\controllers;
+namespace frontend\views\record\controllers;
 
-use common\models\StudentData;
-use common\models\searches\StudentDataSearch;
+use common\models\TeacherAdvisoryAssignment;
+use common\models\searches\TeacherAdvisoryAssignmentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StudentDataController implements the CRUD actions for StudentData model.
+ * TeacherAdvisoryAssignmentController implements the CRUD actions for TeacherAdvisoryAssignment model.
  */
-class StudentDataController extends Controller
+class TeacherAdvisoryAssignmentController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Lists all StudentData models.
+     * Lists all TeacherAdvisoryAssignment models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new StudentDataSearch();
+        $searchModel = new TeacherAdvisoryAssignmentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Displays a single StudentData model.
+     * Displays a single TeacherAdvisoryAssignment model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Creates a new StudentData model.
+     * Creates a new TeacherAdvisoryAssignment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new StudentData();
+        $model = new TeacherAdvisoryAssignment();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Updates an existing StudentData model.
+     * Updates an existing TeacherAdvisoryAssignment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Deletes an existing StudentData model.
+     * Deletes an existing TeacherAdvisoryAssignment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class StudentDataController extends Controller
     }
 
     /**
-     * Finds the StudentData model based on its primary key value.
+     * Finds the TeacherAdvisoryAssignment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return StudentData the loaded model
+     * @return TeacherAdvisoryAssignment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StudentData::findOne(['id' => $id])) !== null) {
+        if (($model = TeacherAdvisoryAssignment::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

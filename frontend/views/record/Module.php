@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\views\transaction;
+namespace frontend\views\record;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'frontend\views\transaction\controllers';
+    public $controllerNamespace = 'frontend\views\record\controllers';
 
     public function init()
     {
