@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 class Strand extends \yii\db\ActiveRecord
 {
@@ -56,5 +57,10 @@ class Strand extends \yii\db\ActiveRecord
     public function getTeacherAdvisoryAssignments()
     {
         return $this->hasMany(TeacherAdvisoryAssignment::class, ['strand_id' => 'id']);
+    }
+
+    public static function getDropdownData(): array
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+use common\models\Semester;
+use kartik\daterange\DateRangePicker;
+use kartik\select2\Select2;
+use kartik\widgets\DatePicker;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
@@ -10,10 +14,24 @@ $form = ActiveForm::begin([
 ?>
 
 <div class="modal-body" style="padding: 0px;">
-    <?= $form->field($model, 'year_start')->textInput() ?>
-    <?= $form->field($model, 'year_end')->textInput() ?>
-    <?= $form->field($model, 'semester_id')->textInput() ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'date_range')->widget(DateRangePicker::classname(), [
+        'options' => ['placeholder' => 'Select start & end of school year ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'convertFormat' => true,
+            'useCurrent' => false,
+            'allowClear' => true,
+            'displayFormat' => 'F j, Y', // Format for display
+        ],
+    ]) ?>
+
+    <?= $form->field($model, 'semester_id')->widget(Select2::classname(), [
+        'data' => Semester::getDropdownData(),
+        'options' => ['placeholder' => 'Select a semester ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 </div>
 
 <div class="modal-footer" style="border-top: 0; margin: 0; padding: 0;">

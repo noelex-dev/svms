@@ -20,8 +20,8 @@ class m250222_064151_school_year extends Migration
             $this->table,
             [
                 'id' => $this->primaryKey(),
-                'year_start' => $this->integer()->notNull(),
-                'year_end' => $this->integer()->notNull(),
+                'year_start' => $this->date()->notNull(),
+                'year_end' => $this->date()->notNull(),
                 'semester_id' => $this->integer()->notNull(),
                 'name' => $this->string()->notNull(),
                 'created_at' => $this->integer()->notNull(),

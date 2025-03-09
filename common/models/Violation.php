@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 class Violation extends \yii\db\ActiveRecord
 {
@@ -51,5 +52,10 @@ class Violation extends \yii\db\ActiveRecord
     public function getViolationType()
     {
         return $this->hasOne(ViolationType::class, ['id' => 'violation_type_id']);
+    }
+
+    public static function getDropdownData(): array
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }
 }

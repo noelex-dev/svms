@@ -5,9 +5,11 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 class SchoolYear extends \yii\db\ActiveRecord
 {
+    public $date_range;
 
     public static function tableName()
     {
@@ -17,10 +19,12 @@ class SchoolYear extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['year_start', 'year_end', 'semester_id', 'name'], 'required'],
-            [['year_start', 'year_end', 'semester_id', 'created_at', 'updated_at'], 'integer'],
+            [['semester_id'], 'required'],
+            [['semester_id', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['year_start', 'year_end'], 'safe'],
             [['semester_id'], 'exist', 'skipOnError' => true, 'targetClass' => Semester::class, 'targetAttribute' => ['semester_id' => 'id']],
+            [['date_range'], 'required'],
         ];
     }
 
@@ -53,5 +57,10 @@ class SchoolYear extends \yii\db\ActiveRecord
     public function getSemester()
     {
         return $this->hasOne(Semester::class, ['id' => 'semester_id']);
+    }
+
+    public static function getDropdownData(): array
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }
 }

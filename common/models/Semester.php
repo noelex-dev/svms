@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 class Semester extends \yii\db\ActiveRecord
 {
@@ -51,5 +52,10 @@ class Semester extends \yii\db\ActiveRecord
     public function getSchoolYears()
     {
         return $this->hasMany(SchoolYear::class, ['semester_id' => 'id']);
+    }
+
+    public static function getDropdownData(): array
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }
 }

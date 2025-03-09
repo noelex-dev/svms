@@ -4,6 +4,8 @@ namespace frontend\views\cms\controllers;
 
 use common\models\SchoolYear;
 use common\models\searches\SchoolYearSearch;
+use DateTime;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,12 +49,26 @@ class SchoolYearController extends Controller
     {
         $model = new SchoolYear();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (!empty($model->date_range)) {
+                $dates = explode(' - ', $model->date_range);
+
+                $startDate = DateTime::createFromFormat('Y-m-d', $dates[0]);
+                $endDate = DateTime::createFromFormat('Y-m-d', $dates[1]);
+
+                if ($startDate && $endDate) {
+                    $model->year_start = $startDate->format('Y-m-d');
+                    $model->year_end = $endDate->format('Y-m-d');
+
+                    $startYear = $startDate->format('Y');
+                    $endYear = $endDate->format('Y');
+                    $model->name = $startYear . '-' . $endYear;
+                }
             }
-        } else {
-            $model->loadDefaultValues();
+
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->renderAjax('create', [
@@ -64,8 +80,33 @@ class SchoolYearController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if (!empty($model->date_range)) {
+                $dates = explode(' - ', $model->date_range);
+
+                $startDate = DateTime::createFromFormat('Y-m-d', $dates[0]);
+                $endDate = DateTime::createFromFormat('Y-m-d', $dates[1]);
+
+                if ($startDate && $endDate) {
+                    $model->year_start = $startDate->format('Y-m-d');
+                    $model->year_end = $endDate->format('Y-m-d');
+
+                    $startYear = $startDate->format('Y');
+                    $endYear = $endDate->format('Y');
+                    $model->name = $startYear . ' - ' . $endYear;
+                }
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
+        }
+
+        $startDate = DateTime::createFromFormat('Y-m-d', $model->year_start);
+        $endDate = DateTime::createFromFormat('Y-m-d', $model->year_end);
+
+        if ($startDate && $endDate) {
+            $model->date_range = $startDate->format('m/d/Y') . ' - ' . $endDate->format('m/d/Y');
         }
 
         return $this->renderAjax('update', [

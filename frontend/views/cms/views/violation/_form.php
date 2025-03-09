@@ -1,5 +1,7 @@
 <?php
 
+use common\models\ViolationType;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
@@ -10,7 +12,13 @@ $form = ActiveForm::begin([
 ?>
 <div class="modal-body" style="padding: 0;">
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'violation_type_id')->textInput() ?>
+    <?= $form->field($model, 'violation_type_id')->widget(Select2::classname(), [
+        'data' => ViolationType::getDropdownData(),
+        'options' => ['placeholder' => 'Select a violation type ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 </div>
 
 <div class="modal-footer" style="border-top: 0; margin: 0; padding: 0;">
