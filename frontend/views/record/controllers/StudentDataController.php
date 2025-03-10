@@ -12,6 +12,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 
 class StudentDataController extends Controller
 {
@@ -59,14 +60,13 @@ class StudentDataController extends Controller
         $guardianPersonalInformationModel = new PersonalInformation();
 
         if (
-            $studentDataModel->load(Yii::$app->request->post()) &&
-            $personalInformationModel->load(Yii::$app->request->post()) &&
-            $studentInformationModel->load(Yii::$app->request->post()) &&
-            $studentPlanModel->load(Yii::$app->request->post()) &&
-            $studentGuardianModel->load(Yii::$app->request->post()) &&
-            $guardianPersonalInformationModel->load(Yii::$app->request->post())
+            $studentDataModel->load(Yii::$app->request->isPost()) &&
+            $personalInformationModel->load($Yii::$app->request->isPost()) &&
+            $studentInformationModel->load($Yii::$app->request->isPost()) &&
+            $studentPlanModel->load($Yii::$app->request->isPost()) &&
+            $studentGuardianModel->load($Yii::$app->request->isPost()) &&
+            $guardianPersonalInformationModel->load($Yii::$app->request->isPost(), Html::getInputName($guardianPersonalInformationModel, 'first_name') . '_guardian')
         ) {
-
             $isValid = $studentDataModel->validate();
             $isValid = $personalInformationModel->validate() && $isValid;
             $isValid = $studentInformationModel->validate() && $isValid;
@@ -74,27 +74,33 @@ class StudentDataController extends Controller
             $isValid = $studentGuardianModel->validate() && $isValid;
             $isValid = $guardianPersonalInformationModel->validate() && $isValid;
 
-            if ($isValid) {
-                $personalInformationModel->save(false);
-                $studentInformationModel->save(false);
-                $studentPlanModel->save(false);
-                $guardianPersonalInformationModel->save(false);
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if ($isValid) {
+                    $personalInformationModel->save(false);
+                    $studentInformationModel->save(false);
+                    $studentPlanModel->save(false);
+                    $guardianPersonalInformationModel->save(false);
 
-                // Set the guardian's personal information ID
-                $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
-                $studentGuardianModel->save(false);
+                    $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
+                    $studentGuardianModel->save(false);
 
-                // Set the foreign keys in StudentData
-                $studentDataModel->personal_information_id = $personalInformationModel->id;
-                $studentDataModel->student_information_id = $studentInformationModel->id;
-                $studentDataModel->student_plan_id = $studentPlanModel->id;
-                $studentDataModel->guardian_id = $studentGuardianModel->id;
+                    $studentDataModel->personal_information_id = $personalInformationModel->id;
+                    $studentDataModel->student_information_id = $studentInformationModel->id;
+                    $studentDataModel->student_plan_id = $studentPlanModel->id;
+                    $studentDataModel->guardian_id = $studentGuardianModel->id;
 
-                $studentDataModel->save(false);
+                    $studentDataModel->save(false);
 
-                return $this->redirect(['view', 'id' => $studentDataModel->id]);
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $studentDataModel->id]);
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::error('Transaction failed: ' . $e->getMessage());
             }
         }
+
 
         return $this->renderAjax('create', [
             'studentDataModel' => $studentDataModel,
@@ -109,7 +115,7 @@ class StudentDataController extends Controller
 
     public function actionUpdate($id)
     {
-        $studentDataModel = $this->findModel($id); // Assuming you have a findModel function
+        $studentDataModel = $this->findModel($id);
 
         $personalInformationModel = PersonalInformation::findOne($studentDataModel->personal_information_id);
         $studentInformationModel = StudentInformation::findOne($studentDataModel->student_information_id);
@@ -117,13 +123,15 @@ class StudentDataController extends Controller
         $studentGuardianModel = StudentGuardian::findOne($studentDataModel->guardian_id);
         $guardianPersonalInformationModel = PersonalInformation::findOne($studentGuardianModel->personal_information_id);
 
+        $post = Yii::$app->request->post();
+
         if (
-            $studentDataModel->load(Yii::$app->request->post()) &&
-            $personalInformationModel->load(Yii::$app->request->post()) &&
-            $studentInformationModel->load(Yii::$app->request->post()) &&
-            $studentPlanModel->load(Yii::$app->request->post()) &&
-            $studentGuardianModel->load(Yii::$app->request->post()) &&
-            $guardianPersonalInformationModel->load(Yii::$app->request->post())
+            $studentDataModel->load($post) &&
+            $personalInformationModel->load($post) &&
+            $studentInformationModel->load($post) &&
+            $studentPlanModel->load($post) &&
+            $studentGuardianModel->load($post) &&
+            $guardianPersonalInformationModel->load($post, Html::getInputName($guardianPersonalInformationModel, 'first_name') . '_guardian')
         ) {
             $isValid = $studentDataModel->validate();
             $isValid = $personalInformationModel->validate() && $isValid;
@@ -132,25 +140,31 @@ class StudentDataController extends Controller
             $isValid = $studentGuardianModel->validate() && $isValid;
             $isValid = $guardianPersonalInformationModel->validate() && $isValid;
 
-            if ($isValid) {
-                $personalInformationModel->save(false);
-                $studentInformationModel->save(false);
-                $studentPlanModel->save(false);
-                $guardianPersonalInformationModel->save(false);
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if ($isValid) {
+                    $personalInformationModel->save(false);
+                    $studentInformationModel->save(false);
+                    $studentPlanModel->save(false);
+                    $guardianPersonalInformationModel->save(false);
 
-                // Set the guardian's personal information ID (in case it changed)
-                $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
-                $studentGuardianModel->save(false);
+                    $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
+                    $studentGuardianModel->save(false);
 
-                // Set the foreign keys in StudentData (in case they changed)
-                $studentDataModel->personal_information_id = $personalInformationModel->id;
-                $studentDataModel->student_information_id = $studentInformationModel->id;
-                $studentDataModel->student_plan_id = $studentPlanModel->id;
-                $studentDataModel->guardian_id = $studentGuardianModel->id;
+                    $studentDataModel->personal_information_id = $personalInformationModel->id;
+                    $studentDataModel->student_information_id = $studentInformationModel->id;
+                    $studentDataModel->student_plan_id = $studentPlanModel->id;
+                    $studentDataModel->guardian_id = $studentGuardianModel->id;
 
-                $studentDataModel->save(false);
+                    $studentDataModel->save(false);
 
-                return $this->redirect(['view', 'id' => $studentDataModel->id]);
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $studentDataModel->id]);
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::error('Transaction failed: ' . $e->getMessage());
+                // Handle the error (e.g., display an error message to the user)
             }
         }
 
