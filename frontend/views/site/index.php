@@ -1,7 +1,7 @@
-<?php
-$this->title = 'Starter Page';
-$this->params['breadcrumbs'] = [['label' => $this->title]];
-?>
+<!-- <?php
+        $this->title = '';
+        $this->params['breadcrumbs'] = [['label' => $this->title]];
+        ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             <?= \hail812\adminlte\widgets\InfoBox::widget([
                 'text' => 'Bookmarks',
                 'number' => '410',
-                 'theme' => 'success',
+                'theme' => 'success',
                 'icon' => 'far fa-flag',
             ]) ?>
         </div>
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
                 ]
             ]) ?>
             <?= \hail812\adminlte\widgets\Ribbon::widget([
-                'id' => $infoBox->id.'-ribbon',
+                'id' => $infoBox->id . '-ribbon',
                 'text' => 'Ribbon',
             ]) ?>
             <?php \hail812\adminlte\widgets\InfoBox::end() ?>
@@ -113,7 +113,7 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
                 'theme' => 'success'
             ]) ?>
             <?= \hail812\adminlte\widgets\Ribbon::widget([
-                'id' => $smallBox->id.'-ribbon',
+                'id' => $smallBox->id . '-ribbon',
                 'text' => 'Ribbon',
                 'theme' => 'warning',
                 'size' => 'lg',
@@ -131,4 +131,4 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
             ]) ?>
         </div>
     </div>
-</div>
+</div> -->
