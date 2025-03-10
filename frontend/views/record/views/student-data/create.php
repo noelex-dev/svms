@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'studentDataModel' => $studentDataModel,
-        'personalInformationModel' => $personalInformationModel,
+        'studentPersonalInformationModel' => $studentPersonalInformationModel,
         'studentInformationModel' => $studentInformationModel,
         'studentPlanModel' => $studentPlanModel,
         'studentGuardianModel' => $studentGuardianModel,

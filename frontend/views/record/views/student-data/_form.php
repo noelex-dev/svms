@@ -63,22 +63,45 @@ $form = ActiveForm::begin([
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <?= $form->field($personalInformationModel, 'first_name')->textInput(['name' => Html::getInputName($personalInformationModel, 'first_name'), 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'first_name')->textInput([
+                            'name' => 'StudentPersonalInformation[first_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($personalInformationModel, 'middle_name')->textInput(['name' => Html::getInputName($personalInformationModel, 'middle_name'), 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'middle_name')->textInput([
+                            'name' => 'StudentPersonalInformation[middle_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($personalInformationModel, 'last_name')->textInput(['name' => Html::getInputName($personalInformationModel, 'last_name'), 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'last_name')->textInput([
+                            'name' => 'StudentPersonalInformation[last_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($personalInformationModel, 'ext_name')->textInput(['name' => Html::getInputName($personalInformationModel, 'ext_name'), 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'ext_name')->textInput([
+                            'name' => 'StudentPersonalInformation[ext_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($personalInformationModel, 'birthdate')->textInput(['class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'birthdate')->textInput([
+                            'name' => 'StudentPersonalInformation[birthdate]',
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-5">
-                        <?= $form->field($personalInformationModel, 'birthplace')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPersonalInformationModel, 'birthplace')->textInput([
+                            'name' => 'StudentPersonalInformation[birthplace]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-2">
                         <?= $form->field($studentInformationModel, 'height')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
@@ -132,16 +155,32 @@ $form = ActiveForm::begin([
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <?= $form->field($guardianPersonalInformationModel, 'first_name')->textInput(['name' => Html::getInputName($guardianPersonalInformationModel, 'first_name') . '_guardian', 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($guardianPersonalInformationModel, 'first_name')->textInput([
+                            'name' => 'GuardianPersonalInformation[first_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($guardianPersonalInformationModel, 'middle_name')->textInput(['name' => Html::getInputName($guardianPersonalInformationModel, 'middle_name') . '_guardian', 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($guardianPersonalInformationModel, 'middle_name')->textInput([
+                            'name' => 'GuardianPersonalInformation[middle_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($guardianPersonalInformationModel, 'last_name')->textInput(['name' => Html::getInputName($guardianPersonalInformationModel, 'last_name') . '_guardian', 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($guardianPersonalInformationModel, 'last_name')->textInput([
+                            'name' => 'GuardianPersonalInformation[last_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($guardianPersonalInformationModel, 'ext_name')->textInput(['name' => Html::getInputName($guardianPersonalInformationModel, 'ext_name') . '_guardian', 'maxlength' => true, 'class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($guardianPersonalInformationModel, 'ext_name')->textInput([
+                            'name' => 'GuardianPersonalInformation[ext_name]',
+                            'maxlength' => true,
+                            'class' => 'form-control form-control-sm'
+                        ]) ?>
                     </div>
                     <div class="form-group col-md-4">
                         <?= $form->field($studentGuardianModel, 'relationship_id')->widget(Select2::classname(), [

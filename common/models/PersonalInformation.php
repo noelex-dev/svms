@@ -72,9 +72,14 @@ class PersonalInformation extends \yii\db\ActiveRecord
     public function getFullName()
     {
         $firstName = $this->first_name;
-        $middleName = $this->middle_name ? ' ' . $this->middle_name : '';
+        $middleName = '';
+
+        if ($this->middle_name) {
+            $middleName = strlen($this->middle_name) === 1 ? ' ' . $this->middle_name . '.' : ' ' . $this->middle_name;
+        }
+
         $lastName = ' ' . $this->last_name;
-        $extName = $this->ext_name ? ' ' . $this->ext_name : '';
+        $extName = $this->ext_name ? ', ' . $this->ext_name : '';
 
         return $firstName . $middleName . $lastName . $extName;
     }
