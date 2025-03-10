@@ -9,7 +9,7 @@ use yii\bootstrap4\Modal;
 
 echo $this->render('@frontend/views/_components/_modal');
 
-$this->title = 'Student Datas';
+$this->title = 'Student List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-data-index">
@@ -46,16 +46,39 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'id',
-            'personal_information_id',
-            'student_information_id',
-            'guardian_id',
-            'student_plan_id',
-            'grade_level_id',
-            'section_id',
-            'strand_id',
-            //'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'personal_information_id',
+                'label' => 'Student Name',
+                'value' => function ($model) {
+                    return $model->personalInformation->fullName;
+                },
+            ],
+            [
+                'attribute' => 'guardian_id',
+                'label' => 'Guardian Name',
+                'value' => function ($model) {
+                    return $model->guardian->personalInformation->fullName;
+                },
+            ],
+            [
+                'attribute' => 'grade_level_id',
+                'value' => function ($model) {
+                    return $model->gradeLevel->name;
+                }
+            ],
+            [
+                'attribute' => 'section_id',
+                'value' => function ($model) {
+                    return $model->section->name;
+                }
+            ],
+            [
+                'attribute' => 'strand_id',
+                'value' => function ($model) {
+                    return $model->strand->name;
+                }
+            ],
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, StudentData $model, $key, $index, $column) {

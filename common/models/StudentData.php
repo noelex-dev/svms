@@ -99,4 +99,17 @@ class StudentData extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StudentViolation::class, ['student_data_id' => 'id']);
     }
+
+    public function getStudentClass()
+    {
+        $grade = $this->getGradeLevel()->one();
+        $strand = $this->getStrand()->one();
+        $section = $this->getSection()->one();
+
+        $gradeName = $grade ? $grade->name : 'N/A';
+        $strandName = $strand ? $strand->name : 'N/A';
+        $sectionName = $section ? $section->name : 'N/A';
+
+        return $gradeName . ' - ' . $strandName . ' - ' . $sectionName;
+    }
 }

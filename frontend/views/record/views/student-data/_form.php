@@ -209,13 +209,13 @@ $form = ActiveForm::begin([
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'elementary')->textInput(['class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPlanModel, 'elementary')->checkbox() ?>
                     </div>
                     <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'secondary')->textInput(['class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPlanModel, 'secondary')->checkbox() ?>
                     </div>
                     <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'college')->textInput(['class' => 'form-control form-control-sm']) ?>
+                        <?= $form->field($studentPlanModel, 'college')->checkbox() ?>
                     </div>
                 </div>
             </div>
