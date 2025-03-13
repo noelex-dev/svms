@@ -8,14 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * StudentViolationController implements the CRUD actions for StudentViolation model.
- */
 class StudentViolationController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -31,11 +25,6 @@ class StudentViolationController extends Controller
         );
     }
 
-    /**
-     * Lists all StudentViolation models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new StudentViolationSearch();
@@ -47,12 +36,6 @@ class StudentViolationController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single StudentViolation model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +43,6 @@ class StudentViolationController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new StudentViolation model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new StudentViolation();
@@ -77,18 +55,11 @@ class StudentViolationController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Updates an existing StudentViolation model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -97,18 +68,11 @@ class StudentViolationController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Deletes an existing StudentViolation model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -116,13 +80,6 @@ class StudentViolationController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the StudentViolation model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return StudentViolation the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = StudentViolation::findOne(['id' => $id])) !== null) {

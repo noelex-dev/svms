@@ -52,66 +52,57 @@ class StudentDataController extends Controller
 
     public function actionCreate()
     {
-        $studentDataModel = new StudentData();
-        $studentPersonalInformationModel = new PersonalInformation();
-        $studentInformationModel = new StudentInformation();
-        $studentPlanModel = new StudentPlan();
-        $studentGuardianModel = new StudentGuardian();
-        $guardianPersonalInformationModel = new PersonalInformation();
+        $studentData = new StudentData();
+        $studentPersonalInfo = new PersonalInformation();
+        $studentInfo = new StudentInformation();
+        $studentPlan = new StudentPlan();
+        $studentGuardian = new StudentGuardian();
+        $guardianPersonalInfo = new PersonalInformation();
 
-        if (Yii::$app->request->getIsPost()) {
-            $postData = Yii::$app->request->post();
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $transaction = Yii::$app->db->beginTransaction();
 
-            if (
-                $studentDataModel->load($postData) &&
-                $studentPersonalInformationModel->load($postData, 'StudentPersonalInformation') &&
-                $studentInformationModel->load($postData) &&
-                $studentPlanModel->load($postData) &&
-                $studentGuardianModel->load($postData) &&
-                $guardianPersonalInformationModel->load($postData, 'GuardianPersonalInformation')
-            ) {
-                $isValid = $studentDataModel->validate();
-                $isValid = $studentPersonalInformationModel->validate() && $isValid;
-                $isValid = $studentInformationModel->validate() && $isValid;
-                $isValid = $studentPlanModel->validate() && $isValid;
-                $isValid = $studentGuardianModel->validate() && $isValid;
-                $isValid = $guardianPersonalInformationModel->validate() && $isValid;
+            try {
+                if (
+                    $studentData->load($post) &&
+                    $studentPersonalInfo->load($post, 'StudentPersonalInformation') &&
+                    $studentInfo->load($post) &&
+                    $studentPlan->load($post) &&
+                    $studentGuardian->load($post) &&
+                    $guardianPersonalInfo->load($post, 'GuardianPersonalInformation')
+                ) {
+                    $studentPersonalInfo->save(false);
+                    $studentInfo->save(false);
+                    $studentPlan->save(false);
+                    $guardianPersonalInfo->save(false);
 
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    if ($isValid) {
-                        $studentPersonalInformationModel->save(false);
-                        $studentInformationModel->save(false);
-                        $studentPlanModel->save(false);
-                        $guardianPersonalInformationModel->save(false);
+                    $studentGuardian->personal_information_id = $guardianPersonalInfo->id;
+                    $studentGuardian->save(false);
 
-                        $studentGuardianModel->personal_information_id = $guardianPersonalInformationModel->id;
-                        $studentGuardianModel->save(false);
+                    $studentData->personal_information_id = $studentPersonalInfo->id;
+                    $studentData->student_information_id = $studentInfo->id;
+                    $studentData->student_plan_id = $studentPlan->id;
+                    $studentData->guardian_id = $studentGuardian->id;
 
-                        $studentDataModel->personal_information_id = $studentPersonalInformationModel->id;
-                        $studentDataModel->student_information_id = $studentInformationModel->id;
-                        $studentDataModel->student_plan_id = $studentPlanModel->id;
-                        $studentDataModel->guardian_id = $studentGuardianModel->id;
+                    $studentData->save(false);
 
-                        $studentDataModel->save(false);
-
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $studentDataModel->id]);
-                    }
-                } catch (\Exception $e) {
-                    $transaction->rollBack();
-                    Yii::error('Transaction failed: ' . $e->getMessage());
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $studentData->id]);
                 }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::error('Transaction failed: ' . $e->getMessage());
             }
         }
 
         return $this->renderAjax('create', [
-            'studentDataModel' => $studentDataModel,
-            'studentPersonalInformationModel' => $studentPersonalInformationModel,
-            'studentInformationModel' => $studentInformationModel,
-            'studentPlanModel' => $studentPlanModel,
-            'studentGuardianModel' => $studentGuardianModel,
-            'guardianPersonalInformationModel' => $guardianPersonalInformationModel,
+            'studentDataModel' => $studentData,
+            'studentPersonalInformationModel' => $studentPersonalInfo,
+            'studentInformationModel' => $studentInfo,
+            'studentPlanModel' => $studentPlan,
+            'studentGuardianModel' => $studentGuardian,
+            'guardianPersonalInformationModel' => $guardianPersonalInfo,
         ]);
     }
 
@@ -119,7 +110,6 @@ class StudentDataController extends Controller
     {
         $studentDataModel = $this->findModel($id);
 
-        // Separate instances for student and guardian
         $studentPersonalInformationModel = PersonalInformation::findOne($studentDataModel->personal_information_id);
         $studentInformationModel = StudentInformation::findOne($studentDataModel->student_information_id);
         $studentPlanModel = StudentPlan::findOne($studentDataModel->student_plan_id);

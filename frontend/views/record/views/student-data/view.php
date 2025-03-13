@@ -2,17 +2,32 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap4\Modal;
 
-$this->title = $model->personalInformation->fullName;
+echo $this->render('@frontend/views/_components/_modal');
+
+$this->title = "Student Data: " . $model->personalInformation->fullName;
 $this->params['breadcrumbs'][] = ['label' => 'Student Data', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->id;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="student-data-view">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/record/student-data/index', ['class' => 'btn btn-secondary']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', '#', [
+            'class' => 'btn btn-primary',
+            'id' => 'modalButton',
+            'data-title' => 'Update Student Data: ' . $model->personalInformation->fullName,
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-user-graduate',
+            'data-url' => Url::to(['/record/student-data/update', 'id' => $model->id]),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_EXTRA_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
+        ]) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -25,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            // 'id',
             [
                 'attribute' => 'personal_information_id',
                 'label' => 'Student Name',
@@ -35,9 +50,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'grade_level_id',
-                'label' => 'Student Grade, Strand, Section',
+                'label' => 'Grade, Strand, Section',
                 'value' => function ($model) {
                     return $model->studentClass;
+                }
+            ],
+            [
+                'label' => 'Language',
+                'value' => function ($model) {
+                    return $model->studentInformation->language ?? '-';
                 }
             ],
             [
@@ -51,7 +72,49 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'guardian_id',
                 'label' => 'Guardian Contact No.',
                 'value' => function ($model) {
-                    return $model->guardian->contact_number;
+                    return $model->guardian->contact_number ?? '-';
+                }
+            ],
+            [
+                'label' => 'Pantawid Pamilyang Pilipino Program (4Ps)',
+                'value' => function ($model) {
+                    return $model->studentInformation->four_p_status ? "Member" : "Not a member";
+                }
+            ],
+            [
+                'label' => 'Early Disease/s',
+                'value' => function ($model) {
+                    return $model->studentInformation->early_disease ?? "-";
+                }
+            ],
+            [
+                'label' => 'Serious Accident/s',
+                'value' => function ($model) {
+                    return $model->studentInformation->serious_accident ?? "-";
+                }
+            ],
+            [
+                'label' => 'Hobby',
+                'value' => function ($model) {
+                    return $model->studentInformation->hobby ?? '-';
+                }
+            ],
+            [
+                'label' => 'Special Talent',
+                'value' => function ($model) {
+                    return $model->studentInformation->special_talent ?? '-';
+                }
+            ],
+            [
+                'label' => 'Easy Subject',
+                'value' => function ($model) {
+                    return $model->studentInformation->easy_subject ?? '-';
+                }
+            ],
+            [
+                'label' => 'Hard Subject',
+                'value' => function ($model) {
+                    return $model->studentInformation->hard_subject ?? '-';
                 }
             ],
             'student_information_id',

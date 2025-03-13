@@ -28,8 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'student_data_id',
             'violation_id',
             'notification_status',
-            'created_at',
-            //'updated_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, StudentViolation $model, $key, $index, $column) {
