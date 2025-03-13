@@ -68,11 +68,6 @@
                                 'icon' => 'fas fa-people-arrows'
                             ],
                             [
-                                'label' => 'Violation Type',
-                                'url' => ['/cms/violation-type/index'],
-                                'icon' => 'fas fa-exclamation-circle'
-                            ],
-                            [
                                 'label' => 'Violation',
                                 'url' => ['/cms/violation/index'],
                                 'icon' => 'fas fa-exclamation-triangle'
