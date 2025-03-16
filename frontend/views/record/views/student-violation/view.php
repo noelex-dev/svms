@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="student-violation-view">
 
     <p>
-        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/record/student-data/index', ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/record/student-violation/index', ['class' => 'btn btn-secondary']) ?>
         <?= Html::a('Update', '#', [
             'class' => 'btn btn-primary',
             'id' => 'modalButton',
