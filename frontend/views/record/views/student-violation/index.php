@@ -15,17 +15,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="student-violation-index">
 
     <p>
-        <?= Html::a('Add', Url::to(['/record/student-violation/create']), [
+        <?= Html::a('Add', '#', [
             'class' => 'btn btn-primary bg-maroon px-5',
             'id' => 'modalButton',
-            // 'data-title' => 'Add Student Violation',
-            // 'data-subtitle' => 'Please fill up the details below.',
-            // 'data-icon' => 'fas fa-user-times',
-            // 'data-url' => Url::to(['/record/student-violation/create']),
-            // 'data-type' => 'POST',
-            // 'data-width' => Modal::SIZE_EXTRA_LARGE,
-            // 'data-toggle' => 'modal',
-            // 'data-target' => '#svmsModal',
+            'data-title' => 'Add Student Violation',
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-user-times',
+            'data-url' => Url::to(['/record/student-violation/create']),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_EXTRA_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
         ]) ?>
     </p>
 
@@ -63,17 +63,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                     'update' => function ($url, StudentViolation $model, $key) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>', Url::to(['/record/student-violation/update', 'id' => $model->id]), [
+                        return Html::a('<i class="fas fa-pencil-alt"></i>', '#', [
                             'class' => 'btn btn-sm btn-primary',
                             'id' => 'modalButton',
-                            // 'data-title' => 'Update Student Violation: ',
-                            // 'data-subtitle' => 'Please fill up the details below.',
-                            // 'data-icon' => 'fas fa-exclamation-circle',
-                            // 'data-url' => Url::to(['/record/student-violation/update', 'id' => $model->id]),
-                            // 'data-type' => 'POST',
-                            // 'data-width' => Modal::SIZE_EXTRA_LARGE,
-                            // 'data-toggle' => 'modal',
-                            // 'data-target' => '#svmsModal',
+                            'data-title' => 'Update Student Violation: ',
+                            'data-subtitle' => 'Please fill up the details below.',
+                            'data-icon' => 'fas fa-exclamation-circle',
+                            'data-url' => Url::to(['/record/student-violation/update', 'id' => $model->id]),
+                            'data-type' => 'POST',
+                            'data-width' => Modal::SIZE_EXTRA_LARGE,
+                            'data-toggle' => 'modal',
+                            'data-target' => '#svmsModal',
                         ]);
                     },
                     'delete' => function ($url, StudentViolation $model, $key) {

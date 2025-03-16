@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use kartik\depdrop\DepDrop;
 use yii\web\Response;
+use lavrentiev\widgets\toastr\Notification;
 
 class StudentViolationController extends Controller
 {
@@ -62,7 +63,7 @@ class StudentViolationController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -75,7 +76,7 @@ class StudentViolationController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -118,53 +119,53 @@ class StudentViolationController extends Controller
 
     public function actionGetStudentList()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
 
-        if (isset($_POST['depdrop_parents']) && !empty($_POST['depdrop_parents'])) {
+        if (isset($_POST['depdrop_parents'])) {
+            Yii::error($_POST['depdrop_parents'], 'debug');
+
             $parents = $_POST['depdrop_parents'];
-            $schoolYear = $parents[0] ?? null;
-            $grade = $parents[1] ?? null;
-            $strand = $parents[2] ?? null;
-            $section = $parents[3] ?? null;
+            if ($parents !== null) {
+                $schoolYear = $parents[0] ?? null;
+                $grade = !empty($parents[1]) ? $parents[1] : null;
+                $strand = !empty($parents[2]) ? $parents[2] : null;
+                $section = !empty($parents[3]) ? $parents[3] : null;
 
-            Yii::info("Filter Parameters: schoolYear=$schoolYear, grade=$grade, strand=$strand, section=$section", 'app');
+                if ($schoolYear === null) {
+                    return ['output' => [], 'selected' => ''];
+                }
 
-            $query = StudentData::find()->with('personalInformation');
+                $query = StudentData::find()->where(['school_year_id' => $schoolYear]);
 
-            if ($grade !== null) {
-                $query->andWhere(['grade_level_id' => $grade]);
+                if ($grade !== null) {
+                    $query->andWhere(['grade_level_id' => $grade]);
+                }
+                if ($strand !== null) {
+                    $query->andWhere(['strand_id' => $strand]);
+                }
+                if ($section !== null) {
+                    $query->andWhere(['section_id' => $section]);
+                }
+
+                Yii::error($query->createCommand()->getRawSql(), 'debug');
+
+                $students = $query->all();
+
+                foreach ($students as $student) {
+                    Yii::error($student->id . ' - ' . ($student->personalInformation ? $student->personalInformation->fullName : 'No Personal Info'), 'debug');
+
+                    if ($student->personalInformation) {
+                        $out[] = [
+                            'id' => $student->id,
+                            'name' => $student->personalInformation->fullName
+                        ];
+                    }
+                }
+
+                return ['output' => $out, 'selected' => ''];
             }
-
-            if ($strand !== null) {
-                $query->andWhere(['strand_id' => $strand]);
-            }
-
-            if ($section !== null) {
-                $query->andWhere(['section_id' => $section]);
-            }
-
-            if ($schoolYear !== null) {
-                $query->andWhere(['school_year_id' => $schoolYear]);
-            }
-
-            Yii::info("SQL Query: " . $query->createCommand()->rawSql, 'app');
-
-            $students = $query->all();
-
-            Yii::info("Student Count: " . count($students), 'app');
-            Yii::info("Students data: " . print_r($students, true), 'app');
-
-            $output = [];
-            foreach ($students as $student) {
-                $name = $student->personalInformation ? $student->personalInformation->getFullName() : 'Personal information not available';
-                $output[] = ['id' => $student->id, 'name' => $name];
-            }
-
-            Yii::info("Output: " . print_r($output, true), 'app');
-
-            return ['output' => $output, 'selected' => ''];
         }
-
-        return ['output' => [], 'selected' => ''];
+        return ['output' => '', 'selected' => ''];
     }
 }

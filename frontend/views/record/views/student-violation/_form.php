@@ -103,6 +103,7 @@ use yii\bootstrap4\ActiveForm;
 
         <div class="col-md-6">
             <?= $form->field($model, 'violation_id')->widget(DepDrop::classname(), [
+                'type' => DepDrop::TYPE_SELECT2,
                 'options' => [
                     'id' => 'violationDropdown',
                     'placeholder' => 'Select a violation ...',
