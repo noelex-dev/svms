@@ -7,22 +7,22 @@ use yii\bootstrap4\Modal;
 
 echo $this->render('@frontend/views/_components/_modal');
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'School Years', 'url' => ['index']];
+$this->title = $model->schoolYear->name . ' | ' . $model->semester->name;
+$this->params['breadcrumbs'][] = ['label' => 'Active School Year Sems', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="school-year-view">
+<div class="active-school-year-sem-view">
 
     <p>
-        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/school-year/index', ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/active-school-year-sem/index', ['class' => 'btn btn-secondary']) ?>
         <?= Html::a('Update', '#', [
             'class' => 'btn btn-primary',
             'id' => 'modalButton',
-            'data-title' => 'Update School Year: ' . $model->name,
+            'data-title' => 'Update School Year: ' . $model->schoolYear->name . ' | ' . $model->semester->name,
             'data-subtitle' => 'Please fill up the details below.',
-            'data-icon' => 'fas fa-calendar-alt',
-            'data-url' => Url::to(['/cms/school-year/update', 'id' => $model->id]),
+            'data-icon' => 'fas fa-calendar-check',
+            'data-url' => Url::to(['/cms/active-school-year-sem/update', 'id' => $model->id]),
             'data-type' => 'POST',
             'data-width' => Modal::SIZE_LARGE,
             'data-toggle' => 'modal',
@@ -40,17 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             [
-                'attribute' => 'year_start',
+                'attribute' => 'school_year_id',
                 'value' => function ($model) {
-                    return date('F j, Y', strtotime($model->year_start));
-                }
-            ],
-            [
-                'attribute' => 'year_end',
-                'value' => function ($model) {
-                    return date('F j, Y', strtotime($model->year_end));
+                    return $model->schoolYear->name;
                 }
             ],
             [
@@ -59,7 +52,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->semester->name;
                 }
             ],
-            'name',
+            [
+                'attribute' => 'is_active',
+                'value' => function ($model) {
+                    return $model->is_active ? 'Active' : 'Inactive';
+                }
+            ],
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {
@@ -72,7 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('F d, Y | h:i:s A', $model->updated_at);
                 }
             ],
-
         ],
     ]) ?>
 

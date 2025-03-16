@@ -3,9 +3,12 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+/** @var yii\web\View $this */
+/** @var common\models\searches\ActiveSchoolYearSemSearch $model */
+/** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="student-plan-search">
+<div class="active-school-year-sem-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -14,16 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'elementary') ?>
+    <?= $form->field($model, 'school_year_id') ?>
 
-    <?= $form->field($model, 'secondary') ?>
+    <?= $form->field($model, 'semester_id') ?>
 
-    <?= $form->field($model, 'college') ?>
+    <?= $form->field($model, 'is_active') ?>
 
     <?= $form->field($model, 'created_at') ?>
 
-    <?php // echo $form->field($model, 'updated_at') 
-    ?>
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

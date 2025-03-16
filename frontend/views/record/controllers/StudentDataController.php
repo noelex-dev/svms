@@ -2,6 +2,7 @@
 
 namespace frontend\views\record\controllers;
 
+use common\models\ActiveSchoolYearSem;
 use common\models\PersonalInformation;
 use common\models\StudentData;
 use common\models\searches\StudentDataSearch;
@@ -12,11 +13,9 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Html;
 
 class StudentDataController extends Controller
 {
-
     public function behaviors()
     {
         return array_merge(

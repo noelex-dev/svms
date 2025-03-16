@@ -20,7 +20,6 @@ class StudentDataSearch extends StudentData
 
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -29,8 +28,6 @@ class StudentDataSearch extends StudentData
         $query = StudentData::find();
 
         $query->joinWith(['personalInformation']);
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,7 +39,6 @@ class StudentDataSearch extends StudentData
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'personal_information_id' => $this->personal_information_id,
@@ -56,7 +52,7 @@ class StudentDataSearch extends StudentData
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'CONCAT(first_name, " ", last_name)', $this->fullName]);
+        $query->andFilterWhere(['like', 'CONCAT(personal_information.first_name, " ", personal_information.last_name)', $this->fullName]);
 
         return $dataProvider;
     }

@@ -49,6 +49,13 @@ $this->params['breadcrumbs'][] = $model->id;
                 }
             ],
             [
+                'attribute' => 'school_year_id',
+                'label' => 'School Year',
+                'value' => function ($model) {
+                    return $model->schoolYear->name;
+                }
+            ],
+            [
                 'attribute' => 'grade_level_id',
                 'label' => 'Grade, Strand, Section',
                 'value' => function ($model) {
@@ -117,9 +124,6 @@ $this->params['breadcrumbs'][] = $model->id;
                     return $model->studentInformation->hard_subject ?? '-';
                 }
             ],
-            'student_information_id',
-            'guardian_id',
-            'student_plan_id',
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {

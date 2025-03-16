@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f5f58bf116112c55a50f5c316a3fd69",
+    "content-hash": "53ffd272c31e327700021f4960d3e4fc",
     "packages": [
         {
             "name": "2amigos/yii2-arrayquery-component",
@@ -8617,7 +8617,8 @@
         "kartik-v/yii2-widget-select2": 20,
         "yiisoft/yii2-bootstrap": 10,
         "kartik-v/yii2-widget-datepicker": 20,
-        "kartik-v/yii2-detail-view": 20
+        "kartik-v/yii2-detail-view": 20,
+        "kartik-v/yii2-widget-depdrop": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

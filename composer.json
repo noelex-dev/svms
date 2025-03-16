@@ -34,7 +34,8 @@
         "yiisoft/yii2-bootstrap4": "^2.0",
         "yiisoft/yii2-bootstrap": "^2.0@beta",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-detail-view": "dev-master"
+        "kartik-v/yii2-detail-view": "dev-master",
+        "kartik-v/yii2-widget-depdrop": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

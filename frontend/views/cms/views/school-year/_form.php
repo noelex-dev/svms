@@ -21,7 +21,7 @@ $form = ActiveForm::begin([
             'convertFormat' => true,
             'useCurrent' => false,
             'allowClear' => true,
-            'displayFormat' => 'F j, Y', // Format for display
+            'displayFormat' => 'F j, Y',
         ],
     ]) ?>
 

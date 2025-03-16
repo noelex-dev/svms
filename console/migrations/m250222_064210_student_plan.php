@@ -18,9 +18,10 @@ class m250222_064210_student_plan extends Migration
             $this->table,
             [
                 'id' => $this->primaryKey(),
-                'elementary' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
-                'secondary' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
-                'college' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
+                'higher_education' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
+                'employment' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
+                'entrepreneurship' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
+                'tesda' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
                 'created_at' => $this->integer()->notNull(),
                 'updated_at' => $this->integer()->notNull(),
             ],

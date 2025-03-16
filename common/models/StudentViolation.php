@@ -8,6 +8,10 @@ use yii\behaviors\TimestampBehavior;
 
 class StudentViolation extends \yii\db\ActiveRecord
 {
+    public $schoolYear;
+    public $grade;
+    public $strand;
+    public $section;
 
     public static function tableName()
     {
@@ -17,6 +21,7 @@ class StudentViolation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['schoolYear', 'grade', 'strand', 'section'], 'safe'],
             [['notification_status'], 'default', 'value' => 0],
             [['student_data_id', 'violation_id'], 'required'],
             [['student_data_id', 'violation_id', 'notification_status', 'created_at', 'updated_at'], 'integer'],
@@ -43,9 +48,14 @@ class StudentViolation extends \yii\db\ActiveRecord
             'id' => 'ID',
             'student_data_id' => 'Student Data ID',
             'violation_id' => 'Violation ID',
-            'notification_status' => 'Notification Status',
+            'notification_status' => 'Guardian Notification Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+
+            'schoolYear' => 'School Year',
+            'grade' => 'Grade',
+            'strand' => 'Strand',
+            'section' => 'Section',
         ];
     }
 

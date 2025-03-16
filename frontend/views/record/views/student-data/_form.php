@@ -1,9 +1,12 @@
 <?php
 
+use common\models\ActiveSchoolYearSem;
 use common\models\GradeLevel;
 use common\models\Relationship;
+use common\models\SchoolYear;
 use common\models\Section;
 use common\models\Strand;
+use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -22,8 +25,20 @@ $form = ActiveForm::begin([
             </div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <?= $form->field($studentDataModel, 'school_year_id')->widget(Select2::classname(), [
+                            'name' => 'studentDataSchoolYear',
+                            'data' => SchoolYear::getDropdownData(),
+                            'size' => Select2::SMALL,
+                            'options' => ['placeholder' => 'Select grade level ...'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]); ?>
+                    </div>
+                    <div class="form-group col-md-3">
                         <?= $form->field($studentDataModel, 'grade_level_id')->widget(Select2::classname(), [
+                            'name' => 'studentDataGradeLevel',
                             'data' => GradeLevel::getDropdownData(),
                             'size' => Select2::SMALL,
                             'options' => ['placeholder' => 'Select grade level ...'],
@@ -32,8 +47,9 @@ $form = ActiveForm::begin([
                             ],
                         ]); ?>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <?= $form->field($studentDataModel, 'strand_id')->widget(Select2::classname(), [
+                            'name' => 'studentDataStrand',
                             'data' => Strand::getDropdownData(),
                             'size' => Select2::SMALL,
                             'options' => ['placeholder' => 'Select strand ...'],
@@ -42,7 +58,7 @@ $form = ActiveForm::begin([
                             ],
                         ]); ?>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <?= $form->field($studentDataModel, 'section_id')->widget(Select2::classname(), [
                             'data' => Section::getDropdownData(),
                             'size' => Select2::SMALL,
@@ -91,9 +107,9 @@ $form = ActiveForm::begin([
                         ]) ?>
                     </div>
                     <div class="form-group col-md-3">
-                        <?= $form->field($studentPersonalInformationModel, 'birthdate')->textInput([
+                        <?= $form->field($studentPersonalInformationModel, 'birthdate')->input('date', [
                             'name' => 'StudentPersonalInformation[birthdate]',
-                            'class' => 'form-control form-control-sm'
+                            'class' => 'form-control form-control-sm',
                         ]) ?>
                     </div>
                     <div class="form-group col-md-5">
@@ -208,14 +224,17 @@ $form = ActiveForm::begin([
             </div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'elementary')->checkbox() ?>
+                    <div class="form-group col-md-3">
+                        <?= $form->field($studentPlanModel, 'higher_education')->checkbox() ?>
                     </div>
-                    <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'secondary')->checkbox() ?>
+                    <div class="form-group col-md-3">
+                        <?= $form->field($studentPlanModel, 'employment')->checkbox() ?>
                     </div>
-                    <div class="form-group col-md-4">
-                        <?= $form->field($studentPlanModel, 'college')->checkbox() ?>
+                    <div class="form-group col-md-3">
+                        <?= $form->field($studentPlanModel, 'entrepreneurship')->checkbox() ?>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <?= $form->field($studentPlanModel, 'tesda')->checkbox() ?>
                     </div>
                 </div>
             </div>

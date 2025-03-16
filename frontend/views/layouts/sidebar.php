@@ -48,6 +48,12 @@
                                 'icon' => 'fas fa-calendar-alt'
                             ],
                             [
+                                'label' => 'Activate SY-Sem',
+                                'url' => ['/cms/active-school-year-sem/index'],
+                                'iconStyle' => 'far',
+                                'icon' => 'fas fa-calendar-check'
+                            ],
+                            [
                                 'label' => 'Grade Level',
                                 'url' => ['/cms/grade-level/index'],
                                 'icon' => 'fas fa-layer-group'

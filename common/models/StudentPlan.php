@@ -13,12 +13,11 @@ class StudentPlan extends \yii\db\ActiveRecord
         return 'student_plan';
     }
 
-
     public function rules()
     {
         return [
-            [['college'], 'default', 'value' => 0],
-            [['elementary', 'secondary', 'college', 'created_at', 'updated_at'], 'integer'],
+            [['higher_education', 'employment', 'entrepreneurship', 'tesda'], 'default', 'value' => 0],
+            [['higher_education', 'employment', 'entrepreneurship', 'tesda', 'created_at', 'updated_at'], 'integer']
         ];
     }
 
@@ -39,9 +38,10 @@ class StudentPlan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'elementary' => 'Elementary',
-            'secondary' => 'Secondary',
-            'college' => 'College',
+            'higher_education' => 'Higher Education (College)',
+            'employment' => 'Employment',
+            'entrepreneurship' => 'Entrepreneurship',
+            'tesda' => 'Midddle-Level Skills (TESDA)',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

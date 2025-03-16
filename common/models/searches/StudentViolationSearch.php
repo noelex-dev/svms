@@ -6,38 +6,21 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\StudentViolation;
 
-/**
- * StudentViolationSearch represents the model behind the search form of `common\models\StudentViolation`.
- */
 class StudentViolationSearch extends StudentViolation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['id', 'student_data_id', 'violation_id', 'notification_status', 'created_at', 'updated_at'], 'integer'],
+            [['schoolYear', 'grade', 'strand', 'section'], 'safe'],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     * @param string|null $formName Form name to be used into `->load()` method.
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params, $formName = null)
     {
         $query = StudentViolation::find();
@@ -51,12 +34,25 @@ class StudentViolationSearch extends StudentViolation
         $this->load($params, $formName);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        if ($this->schoolYear) {
+            $query->joinWith('studentData')->andWhere(['student_data.school_year_id' => $this->schoolYear]);
+        }
+
+        if ($this->grade) {
+            $query->joinWith('studentData')->andWhere(['student_data.grade_level_id' => $this->grade]);
+        }
+
+        if ($this->strand) {
+            $query->joinWith('studentData')->andWhere(['student_data.strand_id' => $this->strand]);
+        }
+
+        if ($this->section) {
+            $query->joinWith('studentData')->andWhere(['student_data.section_id' => $this->section]);
+        }
+
         $query->andFilterWhere([
             'id' => $this->id,
             'student_data_id' => $this->student_data_id,

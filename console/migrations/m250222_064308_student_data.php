@@ -12,6 +12,7 @@ class m250222_064308_student_data extends Migration
     private $gradeLevelRefereceTable = '{{%grade_level}}';
     private $sectionRefereceTable = '{{%section}}';
     private $strandRefereceTable = '{{%strand}}';
+    private $schoolyearRefereceTable = '{{%school_year}}';
 
     public function safeUp()
     {
@@ -32,6 +33,7 @@ class m250222_064308_student_data extends Migration
                 'grade_level_id' => $this->integer()->notNull(),
                 'section_id' => $this->integer()->notNull(),
                 'strand_id' => $this->integer()->notNull(),
+                'school_year_id' => $this->integer()->notNull(),
                 'created_at' => $this->integer()->notNull(),
                 'updated_at' => $this->integer()->notNull(),
             ],
@@ -107,6 +109,16 @@ class m250222_064308_student_data extends Migration
             'NO ACTION',
             'NO ACTION'
         );
+
+        $this->addForeignKey(
+            'svms_student_data-school_year_id_fk',
+            $this->table,
+            ['school_year_id'],
+            $this->schoolyearRefereceTable,
+            ['id'],
+            'NO ACTION',
+            'NO ACTION'
+        );
     }
 
     public function safeDown()
@@ -118,6 +130,7 @@ class m250222_064308_student_data extends Migration
         $this->dropForeignKey('svms_student_data-grade_level_id_fk', $this->table);
         $this->dropForeignKey('svms_student_data-section_id_fk', $this->table);
         $this->dropForeignKey('svms_student_data-strand_id_fk', $this->table);
+        $this->dropForeignKey('svms_student_data-school_year_id_fk', $this->table);
         $this->dropTable($this->table);
     }
 }
