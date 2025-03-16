@@ -7,6 +7,7 @@ class m250222_064321_student_violation extends Migration
 
     private $table = '{{%student_violation}}';
     private $studentDataRefereceTable = '{{%student_data}}';
+    private $userReferenceTable = '{{%user}}';
 
     public function safeUp()
     {
@@ -23,6 +24,8 @@ class m250222_064321_student_violation extends Migration
                 'student_data_id' => $this->integer()->notNull(),
                 'violation_id' => $this->integer()->notNull(),
                 'notification_status' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(0),
+                'user_id' => $this->integer()->notNull(),
+                'is_settled' => $this->integer()->notNull(),
                 'created_at' => $this->integer()->notNull(),
                 'updated_at' => $this->integer()->notNull(),
             ],
@@ -38,11 +41,22 @@ class m250222_064321_student_violation extends Migration
             'CASCADE',
             'CASCADE'
         );
+
+        $this->addForeignKey(
+            'svms_student_data-user_id_fk',
+            $this->table,
+            ['user_id'],
+            $this->userReferenceTable,
+            ['id'],
+            'NO ACTION',
+            'NO ACTION',
+        );
     }
 
     public function safeDown()
     {
         $this->dropForeignKey('svms_student_data-student_data_id_fk', $this->table);
+        $this->dropForeignKey('svms_student_data-user_id_fk', $this->table);
         $this->dropTable($this->table);
     }
 }
