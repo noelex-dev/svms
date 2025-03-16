@@ -27,10 +27,9 @@ use yii\bootstrap4\ActiveForm;
                 'name' => 'schoolYearDropdown',
                 'id' => 'schoolYearDropdown',
                 'data' => SchoolYear::getDropdownData(),
+                'value' => $model->studentData->school_year_id ?? null, // PRE-FILL VALUE
                 'options' => ['placeholder' => 'Filter by school year ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
+                'pluginOptions' => ['allowClear' => true],
             ]); ?>
         </div>
         <div class="col-md-3">
@@ -39,10 +38,9 @@ use yii\bootstrap4\ActiveForm;
                 'name' => 'gradeDropdown',
                 'id' => 'gradeDropdown',
                 'data' => GradeLevel::getDropdownData(),
+                'value' => $model->studentData->grade_level_id ?? null, // PRE-FILL VALUE
                 'options' => ['placeholder' => 'Filter by grade ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
+                'pluginOptions' => ['allowClear' => true],
             ]); ?>
         </div>
         <div class="col-md-3">
@@ -51,10 +49,9 @@ use yii\bootstrap4\ActiveForm;
                 'name' => 'strandDropdown',
                 'id' => 'strandDropdown',
                 'data' => Strand::getDropdownData(),
+                'value' => $model->studentData->strand_id ?? null, // PRE-FILL VALUE
                 'options' => ['placeholder' => 'Filter by strand ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
+                'pluginOptions' => ['allowClear' => true],
             ]); ?>
         </div>
         <div class="col-md-3">
@@ -63,10 +60,9 @@ use yii\bootstrap4\ActiveForm;
                 'name' => 'sectionDropdown',
                 'id' => 'sectionDropdown',
                 'data' => Section::getDropdownData(),
+                'value' => $model->studentData->section_id ?? null, // PRE-FILL VALUE
                 'options' => ['placeholder' => 'Filter by section ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
+                'pluginOptions' => ['allowClear' => true],
             ]); ?>
         </div>
     </div>
@@ -81,10 +77,10 @@ use yii\bootstrap4\ActiveForm;
             'depends' => ['schoolYearDropdown', 'gradeDropdown', 'strandDropdown', 'sectionDropdown'],
             'url' => Url::to(['/record/student-violation/get-student-list']),
             'loadingText' => 'Loading students ...',
+            'initialize' => true,  // Ensure preselected value loads
+            'params' => ['studentDataId'],
         ],
-    ]); ?>
-
-
+    ])->label('Student Name') ?>
 
     <label class="control-label text-muted">Violation</label>
     <div class="row mb-3">
@@ -94,11 +90,11 @@ use yii\bootstrap4\ActiveForm;
                 'name' => 'violationType',
                 'id' => 'violationTypeDropdown',
                 'data' => ViolationType::getDropdownData(),
-                'options' => ['placeholder' => 'Filter by violationt type ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
+                'value' => $model->violation->violation_type_id ?? null, // Pre-fill value
+                'options' => ['placeholder' => 'Filter by violation type ...'],
+                'pluginOptions' => ['allowClear' => true],
             ]); ?>
+
         </div>
 
         <div class="col-md-6">
@@ -113,8 +109,11 @@ use yii\bootstrap4\ActiveForm;
                     'depends' => ['violationTypeDropdown'],
                     'url' => Url::to(['/record/student-violation/get-violations-by-type']),
                     'loadingText' => 'Loading violations ...',
+                    'initialize' => true, // Ensure value is preselected
+                    'params' => ['violationDropdown'],
                 ],
-            ]); ?>
+            ])->label('Violation') ?>
+
         </div>
     </div>
 
@@ -125,10 +124,8 @@ use yii\bootstrap4\ActiveForm;
         ],
         'size' => Select2::MEDIUM,
         'options' => ['placeholder' => 'Select notify status...'],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-        'value' => $model->isNewRecord ? null : ($model->getAttribute('notification_status') ? 1 : 0),
+        'pluginOptions' => ['allowClear' => true],
+        'value' => $model->notification_status, // PRE-FILL VALUE
     ]) ?>
 
     <div class="modal-footer" style="border-top: 0; margin: 0; padding: 0;">
