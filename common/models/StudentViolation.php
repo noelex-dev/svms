@@ -46,9 +46,9 @@ class StudentViolation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'student_data_id' => 'Student Data ID',
-            'violation_id' => 'Violation ID',
-            'notification_status' => 'Guardian Notification Status',
+            'student_data_id' => 'Student Name',
+            'violation_id' => 'Violation',
+            'notification_status' => 'Guardian Notified',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 

@@ -1,6 +1,9 @@
 <?php
 
+use common\models\StudentData;
 use common\models\StudentViolation;
+use common\models\Violation;
+use common\models\ViolationType;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -46,10 +49,34 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'student_data_id',
-            'violation_id',
-            'notification_status',
+            [
+                'attribute' => 'student_data_id',
+                'value' => function ($model) {
+                    $studentModel = StudentData::findOne($model->student_data_id);
+                    return $studentModel ? $studentModel->personalInformation->fullName : 'N/A';
+                }
+            ],
+            [
+                'attribute' => 'violation_id',
+                'value' => function ($model) {
+                    $violationModel = Violation::findOne($model->violation_id);
+                    return $violationModel ? $violationModel->name : 'N/A';
+                }
+            ],
+            [
+                'label' => 'Violation Type',
+                'attribute' => 'violation_id',
+                'value' => function ($model) {
+                    $violationModel = Violation::findOne($model->violation_id);
+                    return $violationModel ? $violationModel->violationType->name : 'N/A';
+                }
+            ],
+            [
+                'attribute' => 'notification_status',
+                'value' => function ($model) {
+                    return $model->notification_status ? 'Notified' : 'Not Notified';
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, StudentViolation $model, $key, $index, $column) {
