@@ -10,8 +10,10 @@ class SvmsAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/styles.css',
+        'css/toastr.min.css',
     ];
     public $js = [
         'js/modal.js',
+        'js/toastr.min.js',
     ];
 }

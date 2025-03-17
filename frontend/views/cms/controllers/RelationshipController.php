@@ -4,6 +4,7 @@ namespace frontend\views\cms\controllers;
 
 use common\models\Relationship;
 use common\models\searches\RelationshipSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -48,8 +49,15 @@ class RelationshipController extends Controller
         $model = new Relationship();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Relationship was added successfully.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to save Relationship. Please check the form for errors.');
+                }
+            } else {
+                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
             }
         } else {
             $model->loadDefaultValues();
@@ -64,8 +72,17 @@ class RelationshipController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Relationship was updated successfully.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to update Relationship. Please check the form for errors.');
+                }
+            } else {
+                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
+            }
         }
 
         return $this->renderAjax('update', [
@@ -75,7 +92,21 @@ class RelationshipController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'Relationship Status deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'Relationship Status could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this Relationship Status. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }

@@ -19,14 +19,14 @@ class SchoolYear extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['semester_id'], 'required'],
-            [['semester_id', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['year_start', 'year_end', 'name'], 'required'],
             [['year_start', 'year_end'], 'safe'],
-            [['semester_id'], 'exist', 'skipOnError' => true, 'targetClass' => Semester::class, 'targetAttribute' => ['semester_id' => 'id']],
             [['date_range'], 'required'],
+            [['created_at', 'updated_at'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
+
 
     public function behaviors()
     {
@@ -41,22 +41,22 @@ class SchoolYear extends \yii\db\ActiveRecord
         ];
     }
 
+
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
             'year_start' => 'Year Start',
             'year_end' => 'Year End',
-            'semester_id' => 'Semester',
             'name' => 'Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    public function getSemester()
+    public function getActiveSchoolyearSem()
     {
-        return $this->hasOne(Semester::class, ['id' => 'semester_id']);
+        return $this->hasOne(ActiveSchoolyearSem::class, ['school_year_id' => 'id']);
     }
 
     public static function getDropdownData(): array

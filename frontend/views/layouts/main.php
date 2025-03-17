@@ -8,6 +8,17 @@ use frontend\assets\SvmsAsset;
 
 SvmsAsset::register($this);
 
+use yii\helpers\Json;
+
+$flashes = Yii::$app->session->getAllFlashes();
+if (!empty($flashes)) {
+    $js = [];
+    foreach ($flashes as $type => $message) {
+        $js[] = "toastr.{$type}(" . Json::encode($message) . ");";
+    }
+    $this->registerJs(implode("\n", $js));
+}
+
 \hail812\adminlte3\assets\FontAwesomeAsset::register($this);
 \hail812\adminlte3\assets\AdminLteAsset::register($this);
 $this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback');

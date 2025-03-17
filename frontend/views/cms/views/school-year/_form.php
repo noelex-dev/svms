@@ -24,14 +24,6 @@ $form = ActiveForm::begin([
             'displayFormat' => 'F j, Y',
         ],
     ]) ?>
-
-    <?= $form->field($model, 'semester_id')->widget(Select2::classname(), [
-        'data' => Semester::getDropdownData(),
-        'options' => ['placeholder' => 'Select a semester ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
 </div>
 
 <div class="modal-footer" style="border-top: 0; margin: 0; padding: 0;">

@@ -4,6 +4,7 @@ namespace frontend\views\cms\controllers;
 
 use common\models\ViolationType;
 use common\models\searches\ViolationTypeSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,7 +76,21 @@ class ViolationTypeController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'Violation Type deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'Violation Type could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this Violation Type. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }

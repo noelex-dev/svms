@@ -3,9 +3,8 @@
 namespace common\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use yii\helpers\ArrayHelper;
+use yii\db\ActiveRecord;
 
 class ActiveSchoolYearSem extends \yii\db\ActiveRecord
 {
@@ -57,29 +56,5 @@ class ActiveSchoolYearSem extends \yii\db\ActiveRecord
     public function getSemester()
     {
         return $this->hasOne(Semester::class, ['id' => 'semester_id']);
-    }
-
-    public static function getAvailableSchoolYears(): array
-    {
-        $usedSchoolYearIds = self::find()
-            ->select('school_year_id')
-            ->column();
-
-        $availableSchoolYears = SchoolYear::find()
-            ->where(['NOT IN', 'id', $usedSchoolYearIds])
-            ->all();
-
-        return $availableSchoolYears;
-    }
-
-    public static function getActiveSchoolYear()
-    {
-        return self::findOne(['is_active' => 1])->schoolYear->id;
-    }
-
-    public static function getDropdownData(): array
-    {
-        $availableSchoolYears = self::getAvailableSchoolYears();
-        return $availableSchoolYears ? ArrayHelper::map($availableSchoolYears, 'id', 'name') : [];
     }
 }

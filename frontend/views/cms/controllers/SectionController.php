@@ -4,6 +4,7 @@ namespace frontend\views\cms\controllers;
 
 use common\models\Section;
 use common\models\searches\SectionSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,7 +76,21 @@ class SectionController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'Section deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'Section could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this Section. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }

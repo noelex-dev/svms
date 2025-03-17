@@ -53,12 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('F j, Y', strtotime($model->year_end));
                 }
             ],
-            [
-                'attribute' => 'semester_id',
-                'value' => function ($model) {
-                    return $model->semester->name;
-                }
-            ],
             'name',
             [
                 'attribute' => 'created_at',

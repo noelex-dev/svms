@@ -4,6 +4,7 @@ namespace frontend\views\cms\controllers;
 
 use common\models\ActiveSchoolYearSem;
 use common\models\searches\ActiveSchoolYearSemSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,42 +44,95 @@ class ActiveSchoolYearSemController extends Controller
         ]);
     }
 
-    public function actionCreate()
+    public function actionActivate($id)
     {
-        $model = new ActiveSchoolYearSem();
+        $model = ActiveSchoolYearSem::findOne($id);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model) {
+            ActiveSchoolYearSem::updateAll(['is_active' => 0]);
+
+            $model->is_active = 1;
+
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'Successfully activated the ' . $model->schoolYear->name . ' - ' . $model->semester->name);
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to activate. Please try again.');
             }
         } else {
-            $model->loadDefaultValues();
+            Yii::$app->session->setFlash('warning', 'Record not found.');
         }
 
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
     }
 
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+    // public function actionCreate()
+    // {
+    //     $model = new ActiveSchoolYearSem();
 
-        return $this->renderAjax('update', [
-            'model' => $model,
-        ]);
-    }
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->save()) {
+    //                 Yii::$app->session->setFlash('success', 'School-Year & Semester was added successfully.');
+    //                 return $this->redirect(['view', 'id' => $model->id]);
+    //             } else {
+    //                 Yii::$app->session->setFlash('error', 'Failed to save School-Year & Semester. Please check the form for errors.');
+    //             }
+    //         } else {
+    //             Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
+    //         }
+    //     } else {
+    //         $model->loadDefaultValues();
+    //     }
+
+    //     return $this->renderAjax('create', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    // public function actionUpdate($id)
+    // {
+    //     $model = $this->findModel($id);
+
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->save()) {
+    //                 Yii::$app->session->setFlash('success', 'School-Year & Semester was updated successfully.');
+    //                 return $this->redirect(['view', 'id' => $model->id]);
+    //             } else {
+    //                 Yii::$app->session->setFlash('error', 'Failed to update School-Year & Semester. Please check the form for errors.');
+    //             }
+    //         } else {
+    //             Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
+    //         }
+    //     }
+
+    //     return $this->renderAjax('update', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'School-Year & Semester deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'School-Year & Semester could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this School-Year & Semester. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }
+
 
     protected function findModel($id)
     {

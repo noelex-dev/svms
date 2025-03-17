@@ -30,13 +30,6 @@ class m250315_051124_active_schoolyear_sem extends Migration
             $tableOptions
         );
 
-        $this->createIndex(
-            'svms_active_schoolyear_sem-school_year_id-unique',
-            $this->table,
-            'school_year_id',
-            true
-        );
-
         $this->addForeignKey(
             'svms_active_schoolyear_sem-school_year_id_fk',
             $this->table,
@@ -62,7 +55,6 @@ class m250315_051124_active_schoolyear_sem extends Migration
     {
         $this->dropForeignKey('svms_active_schoolyear_sem-school_year_id_fk', $this->table);
         $this->dropForeignKey('svms_active_schoolyear_sem-semester_id_fk', $this->table);
-        $this->dropIndex('svms_active_schoolyear_sem-school_year_id-unique', $this->table);
         $this->dropTable($this->table);
     }
 }

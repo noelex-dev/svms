@@ -4,6 +4,7 @@ namespace frontend\views\cms\controllers;
 
 use common\models\Strand;
 use common\models\searches\StrandSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,7 +76,21 @@ class StrandController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'Strand deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'Strand could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this Strand. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }

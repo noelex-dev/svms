@@ -14,27 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="active-school-year-sem-index">
 
-    <p>
-        <?= Html::a('Add', '#', [
-            'class' => 'btn btn-primary bg-maroon px-5',
-            'id' => 'modalButton',
-            'data-title' => 'Activate School Year - Semester',
-            'data-subtitle' => 'Please fill up the details below.',
-            'data-icon' => 'fas fa-calendar-check',
-            'data-url' => Url::to(['/cms/active-school-year-sem/create']),
-            'data-type' => 'POST',
-            'data-width' => Modal::SIZE_LARGE,
-            'data-toggle' => 'modal',
-            'data-target' => '#svmsModal',
-        ]) ?>
-    </p>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
         'pager' => [
             'options' => ['class' => 'pagination justify-content-center'],
             'linkContainerOptions' => ['class' => 'page-item'],
@@ -61,10 +45,22 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'is_active',
                 'value' => function ($model) {
+                    $url = Yii::$app->urlManager->createUrl(['/cms/active-school-year-sem/activate', 'id' => $model->id]);
+
                     if ($model->is_active === 1) {
-                        return '<span class="text-md m-0 py-1" style="background-color: #05DF72; color: #0D542B; border-radius: 9px; width: 90px; display: inline-block; text-align: center;"><strong>Active</strong></span>';
+                        return '<a href="' . $url . '" data-method="post" class="toggle-status">
+                                    <span class="text-md m-0 py-1" 
+                                        style="background-color: #05DF72; color: #0D542B; border-radius: 9px; width: 90px; display: inline-block; text-align: center;">
+                                        <strong>Active</strong>
+                                    </span>
+                                </a>';
                     } else {
-                        return '<span class="text-md m-0 py-1" style="background-color: #FFA2A2; color: #9F0712; border-radius: 9px; width: 90px; display: inline-block; text-align: center;"><strong>Inactive</strong></span>';
+                        return '<a href="' . $url . '" data-method="post" class="toggle-status">
+                                    <span class="text-md m-0 py-1" 
+                                        style="background-color: #FFA2A2; color: #9F0712; border-radius: 9px; width: 90px; display: inline-block; text-align: center;">
+                                        <strong>Inactive</strong>
+                                    </span>
+                                </a>';
                     }
                 },
                 'format' => 'raw',
@@ -81,20 +77,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'btn btn-sm btn-info',
                         ]);
                     },
-                    'update' => function ($url, ActiveSchoolYearSem $model, $key) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>', '#', [
-                            'class' => 'btn btn-sm  btn-primary',
-                            'id' => 'modalButton',
-                            'data-title' => 'Update School Year: ' . $model->schoolYear->name . ' | ' . $model->semester->name,
-                            'data-subtitle' => 'Please fill up the details below.',
-                            'data-icon' => 'fas fa-calendar-check',
-                            'data-url' => Url::to(['/cms/active-school-year-sem/update', 'id' => $model->id]),
-                            'data-type' => 'POST',
-                            'data-width' => Modal::SIZE_LARGE,
-                            'data-toggle' => 'modal',
-                            'data-target' => '#svmsModal',
-                        ]);
-                    },
                     'delete' => function ($url, ActiveSchoolYearSem $model, $key) {
                         return Html::a('<i class="fas fa-trash"></i>', $url, [
                             'title' => Yii::t('yii', 'Delete'),
@@ -105,8 +87,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ]);
                     },
+                    // 'update' => function ($url, ActiveSchoolYearSem $model, $key) {
+                    //     return Html::a('<strong style="color: #016630;">Activate</strong>', '#', [
+                    //         'class' => 'btn btn-sm btn-success',
+                    //         'id' => 'modalButton',
+                    //         'data-title' => 'Update School Year: ' . $model->schoolYear->name . ' | ' . $model->semester->name,
+                    //         'data-subtitle' => 'Please fill up the details below.',
+                    //         'data-icon' => 'fas fa-calendar-check',
+                    //         'data-url' => Url::to(['/cms/active-school-year-sem/update', 'id' => $model->id]),
+                    //         'data-type' => 'POST',
+                    //         'data-width' => Modal::SIZE_LARGE,
+                    //         'data-toggle' => 'modal',
+                    //         'data-target' => '#svmsModal',
+                    //     ]);
+                    // },
                 ],
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {delete}',
             ]
         ],
     ]); ?>

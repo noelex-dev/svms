@@ -17,8 +17,8 @@ class SchoolYearSearch extends SchoolYear
     public function rules()
     {
         return [
-            [['id', 'year_start', 'year_end', 'semester_id', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['year_start', 'year_end', 'name'], 'safe'],
         ];
     }
 
@@ -62,7 +62,6 @@ class SchoolYearSearch extends SchoolYear
             'id' => $this->id,
             'year_start' => $this->year_start,
             'year_end' => $this->year_end,
-            'semester_id' => $this->semester_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

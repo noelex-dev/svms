@@ -8,7 +8,6 @@ use yii\behaviors\TimestampBehavior;
 
 class User extends \yii\db\ActiveRecord
 {
-
     public static function tableName()
     {
         return 'user';
@@ -19,8 +18,8 @@ class User extends \yii\db\ActiveRecord
         return [
             [['password_reset_token', 'verification_token'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 10],
-            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'auth_key', 'password_hash', 'email', 'personal_information_id'], 'required'],
+            [['status', 'created_at', 'updated_at', 'personal_information_id'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
@@ -28,7 +27,6 @@ class User extends \yii\db\ActiveRecord
             [['password_reset_token'], 'unique'],
         ];
     }
-
     public function behaviors()
     {
         return [
@@ -39,6 +37,7 @@ class User extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
+            [['personal_information_id'], 'exist', 'skipOnError' => true, 'targetClass' => PersonalInformation::class, 'targetAttribute' => ['personal_information_id' => 'id']],
         ];
     }
 
@@ -55,9 +54,19 @@ class User extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
+            'personal_information_id' => 'Personal Information ID',
         ];
     }
 
+    public function getPersonalInformation()
+    {
+        return $this->hasOne(PersonalInformation::class, ['id' => 'personal_information_id']);
+    }
+
+    public function getStudentViolations()
+    {
+        return $this->hasMany(StudentViolation::class, ['user_id' => 'id']);
+    }
 
     public function getTeacherAdvisoryAssignments()
     {
