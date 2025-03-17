@@ -56,8 +56,6 @@ class RelationshipController extends Controller
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to save Relationship. Please check the form for errors.');
                 }
-            } else {
-                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
             }
         } else {
             $model->loadDefaultValues();
@@ -80,8 +78,6 @@ class RelationshipController extends Controller
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to update Relationship. Please check the form for errors.');
                 }
-            } else {
-                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
             }
         }
 
@@ -97,12 +93,12 @@ class RelationshipController extends Controller
         if ($model !== null) {
             try {
                 if ($model->delete()) {
-                    Yii::$app->session->setFlash('success', 'Relationship Status deleted successfully.');
+                    Yii::$app->session->setFlash('success', 'Relationship deleted successfully.');
                 } else {
-                    Yii::$app->session->setFlash('warning', 'Relationship Status could not be deleted.');
+                    Yii::$app->session->setFlash('warning', 'Relationship could not be deleted.');
                 }
             } catch (\yii\db\IntegrityException $e) {
-                Yii::$app->session->setFlash('error', "Can't delete this Relationship Status. It is being used in other records.");
+                Yii::$app->session->setFlash('error', "Can't delete this Relationship. It is being used in other records.");
             }
         } else {
             Yii::$app->session->setFlash('info', "The requested School Year does not exist.");

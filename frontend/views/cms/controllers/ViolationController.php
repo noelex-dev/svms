@@ -49,8 +49,13 @@ class ViolationController extends Controller
         $model = new Violation();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Violation was added successfully.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to save Violation. Please check the form for errors.');
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -65,8 +70,15 @@ class ViolationController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Violation was updated successfully.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to update Violation. Please check the form for errors.');
+                }
+            }
         }
 
         return $this->renderAjax('update', [
@@ -88,8 +100,6 @@ class ViolationController extends Controller
             } catch (\yii\db\IntegrityException $e) {
                 Yii::$app->session->setFlash('error', "Can't delete this Violation. It is being used in other records.");
             }
-        } else {
-            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
         }
 
         return $this->redirect(['index']);

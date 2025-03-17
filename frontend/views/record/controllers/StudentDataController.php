@@ -87,9 +87,11 @@ class StudentDataController extends Controller
                     $studentData->save(false);
 
                     $transaction->commit();
+                    Yii::$app->session->setFlash('success', 'Student was Added successfully.');
                     return $this->redirect(['view', 'id' => $studentData->id]);
                 }
             } catch (\Exception $e) {
+                Yii::$app->session->setFlash('error', 'Failed to save Student. Please check the form for errors.');
                 $transaction->rollBack();
                 Yii::error('Transaction failed: ' . $e->getMessage());
             }
@@ -151,9 +153,11 @@ class StudentDataController extends Controller
                     $studentDataModel->save(false);
 
                     $transaction->commit();
+                    Yii::$app->session->setFlash('success', 'Student was updated successfully.');
                     return $this->redirect(['view', 'id' => $studentDataModel->id]);
                 }
             } catch (\Exception $e) {
+                Yii::$app->session->setFlash('error', 'Failed to update Student. Please check the form for errors.');
                 $transaction->rollBack();
                 Yii::error('Transaction failed: ' . $e->getMessage());
             }
@@ -171,7 +175,21 @@ class StudentDataController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model !== null) {
+            try {
+                if ($model->delete()) {
+                    Yii::$app->session->setFlash('success', 'Student Violation deleted successfully.');
+                } else {
+                    Yii::$app->session->setFlash('warning', 'Student Violation could not be deleted.');
+                }
+            } catch (\yii\db\IntegrityException $e) {
+                Yii::$app->session->setFlash('error', "Can't delete this Student Violation. It is being used in other records.");
+            }
+        } else {
+            Yii::$app->session->setFlash('info', "The requested School Year does not exist.");
+        }
 
         return $this->redirect(['index']);
     }

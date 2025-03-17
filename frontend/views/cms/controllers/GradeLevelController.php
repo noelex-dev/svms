@@ -56,8 +56,6 @@ class GradeLevelController extends Controller
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to save Grade Level. Please check the form for errors.');
                 }
-            } else {
-                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
             }
         } else {
             $model->loadDefaultValues();
@@ -80,8 +78,6 @@ class GradeLevelController extends Controller
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to update Grade Level. Please check the form for errors.');
                 }
-            } else {
-                Yii::$app->session->setFlash('warning', 'Invalid data received. Please try again.');
             }
         }
 

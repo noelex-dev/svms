@@ -84,8 +84,6 @@ class SchoolYearController extends Controller
 
                 Yii::$app->session->setFlash('success', 'School-Year was added successfully.');
                 return $this->redirect(['index']);
-            } else {
-                Yii::$app->session->setFlash('error', 'Failed to save School-Year. Please check the form for errors.');
             }
         }
 
