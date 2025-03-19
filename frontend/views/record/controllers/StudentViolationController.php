@@ -62,6 +62,7 @@ class StudentViolationController extends Controller
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to save Student Violation. Please check the form for errors.');
+                    $this->actionIndex();
                 }
             }
         } else {

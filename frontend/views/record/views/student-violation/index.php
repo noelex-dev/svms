@@ -78,6 +78,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'attribute' => 'is_settled',
+                'value' => function ($model) {
+                    if ($model->is_settled === 1) {
+                        return '<span class="text-md m-0 py-1" 
+                                    style="background-color: #05DF72; color: #0D542B; border-radius: 9px; width: 90px; display: inline-block; text-align: center;">
+                                    <strong>Settled</strong>
+                                </span>';
+                    } else {
+                        return '<span class="text-md m-0 py-1" 
+                                    style="background-color: #FFA2A2; color: #9F0712; border-radius: 9px; width: 90px; display: inline-block; text-align: center;">
+                                    <strong>Unsettled</strong>
+                                </span>';
+                    }
+                },
+                'format' => 'raw',
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, StudentViolation $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

@@ -21,9 +21,9 @@ class StudentViolation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['schoolYear', 'grade', 'strand', 'section'], 'safe'],
-            [['notification_status'], 'default', 'value' => 0],
-            [['student_data_id', 'violation_id', 'user_id', 'is_settled'], 'required'],
+            [['schoolYear', 'grade', 'strand', 'section', 'user_id'], 'safe'],
+            [['notification_status', 'is_settled'], 'default', 'value' => 0],
+            [['student_data_id', 'violation_id'], 'required'],
             [['student_data_id', 'violation_id', 'notification_status', 'user_id', 'is_settled', 'created_at', 'updated_at'], 'integer'],
             [['student_data_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentData::class, 'targetAttribute' => ['student_data_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -51,7 +51,7 @@ class StudentViolation extends \yii\db\ActiveRecord
             'violation_id' => 'Violation',
             'notification_status' => 'Guardian Notified',
             'user_id' => 'User ID',
-            'is_settled' => 'Is Settled',
+            'is_settled' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
