@@ -1,28 +1,25 @@
 <?php
+
+use yii\helpers\Url;
+
 ?>
 
 <aside class="main-sidebar sidebar-dark-maroon elevation-4">
-    <a href="/" class="brand-link">
-        <img src="<?= yii\helpers\Url::to('@web/Logo.jpg') ?>" alt="DEFEMNHS Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">DEFEMNHS</span>
-    </a>
-
+    <!-- Background Image -->
+    <div class="sidebar-wrapper">
+        <div class="d-flex justify-content-center align-items-center">
+            <a href="<?= Url::base() ?>" class="d-flex justify-content-center align-items-center">
+                <!-- @web/Logo.jpg DEFEMNHS -->
+                <img src=" <?= Url::to('') ?>" alt="Logo" class="brand-image img-circle elevation-3" style="display: block; width: 70%; height: auto;">
+            </a>
+        </div>
+    </div>
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="" class="img-circle elevation-2" alt="image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
-            </div>
-        </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <?php
-
-            use yii\helpers\Url;
 
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
@@ -79,7 +76,9 @@
                                 'icon' => 'fas fa-exclamation-triangle'
                             ],
 
-                        ]
+                        ],
+                        'active' => true,
+                        'expanded' => true,
                     ],
                     ['template' => '<div class="dropdown-divider"></div>'],
                     [
@@ -101,7 +100,9 @@
                                 'url' => ['/record/teacher-advisory-assignment/index'],
                                 'icon' => 'fas fa-chalkboard-teacher'
                             ],
-                        ]
+                        ],
+                        'active' => true,
+                        'expanded' => true,
                     ],
                 ],
             ]);

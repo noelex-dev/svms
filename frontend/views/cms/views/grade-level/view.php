@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Grade Levels', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="grade-level-view">
+<div class="grade-level-view px-4">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/grade-level/index', ['class' => 'btn btn-secondary']) ?>

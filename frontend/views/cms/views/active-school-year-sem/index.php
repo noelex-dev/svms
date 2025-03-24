@@ -12,7 +12,7 @@ echo $this->render('@frontend/views/_components/_modal');
 $this->title = 'School Year & Semesters';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="active-school-year-sem-index">
+<div class="active-school-year-sem-index px-4">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
@@ -28,8 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'nextPageLabel' => 'Next',
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'width: 5%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 5%; text-align: center; vertical-align: middle;'],
+            ],
             [
                 'attribute' => 'school_year_id',
                 'value' => function ($model) {
@@ -102,6 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     //     ]);
                     // },
                 ],
+                'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'],
                 'template' => '{view} {delete}',
             ]
         ],

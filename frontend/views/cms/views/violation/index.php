@@ -12,7 +12,7 @@ echo $this->render('@frontend/views/_components/_modal');
 $this->title = 'Violations';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="violation-index">
+<div class="violation-index px-4">
 
     <p>
         <?= Html::a('Add', '#', [
@@ -44,7 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'nextPageLabel' => 'Next',
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'width: 5%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 5%; text-align: center; vertical-align: middle;'],
+            ],
 
             'name',
             [
@@ -91,6 +95,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                 ],
+                'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'],
                 'template' => '{view} {update} {delete}',
             ]
         ],

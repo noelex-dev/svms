@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Strands', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="strand-view">
+<div class="strand-view px-4">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/strand/index', ['class' => 'btn btn-secondary']) ?>

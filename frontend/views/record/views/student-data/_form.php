@@ -223,17 +223,17 @@ $form = ActiveForm::begin([
                 <i class="fas fa-list-check"></i> Student Plan
             </div>
             <div class="card-body">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
+                <div class="form-row d-flex justify-content-around">
+                    <div class="form-group col-md-2">
                         <?= $form->field($studentPlanModel, 'higher_education')->checkbox() ?>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <?= $form->field($studentPlanModel, 'employment')->checkbox() ?>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <?= $form->field($studentPlanModel, 'entrepreneurship')->checkbox() ?>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <?= $form->field($studentPlanModel, 'tesda')->checkbox() ?>
                     </div>
                 </div>

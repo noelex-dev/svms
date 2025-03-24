@@ -42,7 +42,7 @@ class ActiveSchoolYearSem extends \yii\db\ActiveRecord
             'id' => 'ID',
             'school_year_id' => 'School Year',
             'semester_id' => 'Semester',
-            'is_active' => 'Is Active',
+            'is_active' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

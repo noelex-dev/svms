@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Relationships', 'url' => ['index']
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="relationship-view">
+<div class="relationship-view px-4">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/relationship/index', ['class' => 'btn btn-secondary']) ?>

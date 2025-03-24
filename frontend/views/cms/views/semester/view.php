@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Semesters', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="semester-view">
+<div class="semester-view px-4">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/semester/index', ['class' => 'btn btn-secondary']) ?>

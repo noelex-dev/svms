@@ -44,7 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'nextPageLabel' => 'Next',
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['style' => 'width: 5%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 5%; text-align: center; vertical-align: middle;'],
+            ],
 
             [
                 'attribute' => 'personal_information_id',
@@ -116,6 +120,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                 ],
+                'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'],
                 'template' => '{view} {update} {delete}',
             ]
         ],

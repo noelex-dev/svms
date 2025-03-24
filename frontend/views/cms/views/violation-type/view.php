@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Violation Types', 'url' => ['index
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="violation-type-view">
+<div class="violation-type-view px-4">
 
     <p>
         <?= Html::a('<i class="fas fa-arrow-left"></i> Go Back', '/cms/violation-type/index', ['class' => 'btn btn-secondary']) ?>

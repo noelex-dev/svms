@@ -44,7 +44,7 @@ class StudentGuardian extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'personal_information_id' => 'Personal Information ID',
-            'relationship_id' => 'Relationship ID',
+            'relationship_id' => 'Relationship',
             'contact_number' => 'Contact Number',
             'occupation' => 'Occupation',
             'created_at' => 'Created At',
