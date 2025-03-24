@@ -26,6 +26,7 @@ class m250222_064308_student_data extends Migration
             $this->table,
             [
                 'id' => $this->primaryKey(),
+                'lrn' => $this->string()->notNull()->unique(),
                 'personal_information_id' => $this->integer()->notNull(),
                 'student_information_id' => $this->integer()->notNull(),
                 'guardian_id' => $this->integer(),

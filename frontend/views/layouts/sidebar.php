@@ -27,11 +27,16 @@ use yii\helpers\Url;
                         'label' => 'Dashboard',
                         'url' => '#',
                         'icon' => 'fas fa-chart-line',
+                        'visible' => !Yii::$app->user->isGuest,
                     ],
-                    ['template' => '<div class="dropdown-divider p-0 b-0"></div>'],
+                    [
+                        'template' => '<div class="dropdown-divider p-0 b-0"></div>',
+                        'visible' => !Yii::$app->user->isGuest,
+                    ],
                     [
                         'label' => 'Content Management',
                         'icon' => 'fas fa-cogs',
+                        'visible' => !Yii::$app->user->isGuest,
                         'items' => [
                             [
                                 'label' => 'Semester',
@@ -80,10 +85,14 @@ use yii\helpers\Url;
                         'active' => true,
                         'expanded' => true,
                     ],
-                    ['template' => '<div class="dropdown-divider"></div>'],
+                    [
+                        'template' => '<div class="dropdown-divider"></div>',
+                        'visible' => !Yii::$app->user->isGuest,
+                    ],
                     [
                         'label' => 'Records',
                         'icon' => 'fas fa-laptop',
+                        'visible' => !Yii::$app->user->isGuest,
                         'items' => [
                             [
                                 'label' => 'Students',

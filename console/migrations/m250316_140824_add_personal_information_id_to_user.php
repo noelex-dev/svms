@@ -8,7 +8,7 @@ class m250316_140824_add_personal_information_id_to_user extends Migration
 
     public function up()
     {
-        $this->addColumn($this->table, 'personal_information_id', $this->integer()->notNull());
+        $this->addColumn($this->table, 'personal_information_id', $this->integer());
 
         $this->addForeignKey(
             'fk_user_personal_information',

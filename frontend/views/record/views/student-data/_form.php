@@ -78,6 +78,15 @@ $form = ActiveForm::begin([
             </div>
             <div class="card-body">
                 <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            <?= $form->field($studentDataModel, 'lrn')->textInput([
+                                'name' => 'StudentData[lrn]',
+                                'maxlength' => true,
+                                'class' => 'form-control form-control-sm'
+                            ]) ?>
+                        </div>
+                    </div>
                     <div class="form-group col-md-3">
                         <?= $form->field($studentPersonalInformationModel, 'first_name')->textInput([
                             'name' => 'StudentPersonalInformation[first_name]',

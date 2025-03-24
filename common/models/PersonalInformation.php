@@ -22,7 +22,8 @@ class PersonalInformation extends \yii\db\ActiveRecord
             [['first_name', 'last_name'], 'required'],
             [['birthdate'], 'safe'],
             [['created_at', 'updated_at'], 'integer'],
-            [['first_name', 'middle_name', 'last_name', 'ext_name', 'birthplace'], 'string', 'max' => 255],
+            [['middle_name', 'ext_name', 'birthplace'], 'string', 'max' => 255],
+            [['first_name', 'last_name'], 'string', 'min' => 2, 'max' => 255],
         ];
     }
 

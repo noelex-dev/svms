@@ -10,11 +10,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-use kartik\depdrop\DepDrop;
 use yii\web\Response;
-use lavrentiev\widgets\toastr\Notification;
 
 class StudentViolationController extends Controller
 {

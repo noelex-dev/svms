@@ -38,31 +38,36 @@ $this->registerJsFile($publishedRes[1] . '/control_sidebar.js', ['depends' => '\
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <title="<?= Html::encode($this->title) ?>< /title>
+        <?php $this->head() ?>
+        <?php if (Yii::$app->user->isGuest): ?>
+            <style>
+                .content-wrapper {
+                    margin-left: 0 !important;
+                    background-color: #F4F6F9 !important;
+                }
+
+                .breadcrumb {
+                    display: none;
+                }
+            </style>
+        <?php endif; ?>
 </head>
 
 <body class="hold-transition sidebar-mini">
     <?php $this->beginBody() ?>
 
     <div class="wrapper">
-        <!-- Navbar -->
-        <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>
-        <!-- /.navbar -->
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?= $this->render('navbar', ['assetDir' => $assetDir]) ?>
+            <?= $this->render('sidebar', ['assetDir' => $assetDir]) ?>
+        <?php endif; ?>
 
-        <!-- Main Sidebar Container -->
-        <?= $this->render('sidebar', ['assetDir' => $assetDir]) ?>
-
-        <!-- Content Wrapper. Contains page content -->
         <?= $this->render('content', ['content' => $content, 'assetDir' => $assetDir]) ?>
-        <!-- /.content-wrapper -->
-
-        <!-- Control Sidebar -->
-        <?= $this->render('control-sidebar') ?>
-        <!-- /.control-sidebar -->
-
-        <!-- Main Footer -->
-        <?= $this->render('footer') ?>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?= $this->render('control-sidebar') ?>
+            <?= $this->render('footer') ?>
+        <?php endif; ?>
     </div>
 
     <?php $this->endBody() ?>
