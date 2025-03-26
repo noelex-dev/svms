@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $model->id;
             'model' => $model,
             'attributes' => [
                 // 'id',
+                'lrn',
                 [
                     'attribute' => 'personal_information_id',
                     'label' => 'Student Name',

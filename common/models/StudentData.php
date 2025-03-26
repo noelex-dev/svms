@@ -21,6 +21,7 @@ class StudentData extends \yii\db\ActiveRecord
             [['guardian_id'], 'default', 'value' => null],
             [['personal_information_id', 'student_information_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id', 'lrn'], 'required'],
             [['lrn'], 'unique'],
+            [['lrn'], 'string'],
             [['personal_information_id', 'student_information_id', 'guardian_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id', 'created_at', 'updated_at'], 'integer'],
             [['grade_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GradeLevel::class, 'targetAttribute' => ['grade_level_id' => 'id']],
             [['guardian_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentGuardian::class, 'targetAttribute' => ['guardian_id' => 'id']],

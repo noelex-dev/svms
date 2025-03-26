@@ -90,9 +90,17 @@ class StudentDataController extends Controller
                     Yii::$app->session->setFlash('success', 'Student was Added successfully.');
                     return $this->redirect(['view', 'id' => $studentData->id]);
                 }
-            } catch (\Exception $e) {
-                Yii::$app->session->setFlash('error', 'Failed to save Student. Please check the form for errors.');
+            } catch (\yii\db\IntegrityException $e) {
                 $transaction->rollBack();
+                if (strpos($e->getMessage(), 'UNIQUE constraint failed: student_data.lrn') !== false) {
+                    Yii::$app->session->setFlash('error', 'LRN already exists. Please enter a unique LRN.');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to save Student. Please check the form for errors.');
+                }
+                Yii::error('Transaction failed: ' . $e->getMessage());
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('error', 'Failed to save Student. Please check the form for errors.');
                 Yii::error('Transaction failed: ' . $e->getMessage());
             }
         }
