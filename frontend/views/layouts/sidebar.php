@@ -30,12 +30,6 @@ $isAdmin = isset($roles['Administrator']);
                     //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
                     //     'visible' => $isAdmin,
                     // ],
-                    [
-                        'label' => 'Dashboard',
-                        'url' => '/record/dashboard/index',
-                        'icon' => 'fas fa-chart-line',
-                        'visible' => $isAdmin,
-                    ],
                     // [
                     //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
                     //     'visible' => $isAdmin,
@@ -102,6 +96,11 @@ $isAdmin = isset($roles['Administrator']);
                         'visible' => $isAdmin,
                         'items' => [
                             [
+                                'label' => 'Dashboard',
+                                'url' => '/record/dashboard/index',
+                                'icon' => 'fas fa-chart-line',
+                            ],
+                            [
                                 'label' => 'Students',
                                 'url' => ['/record/student-data/index'],
                                 'icon' => 'fas fa-user-graduate'
@@ -116,6 +115,21 @@ $isAdmin = isset($roles['Administrator']);
                                 'url' => ['/record/teacher-advisory-assignment/index'],
                                 'icon' => 'fas fa-chalkboard-teacher'
                             ],
+                        ],
+                        'active' => true,
+                        'expanded' => true,
+                    ],
+                    [
+                        'label' => 'User Management',
+                        'icon' => 'fas fa-user',
+                        'visible' => $isAdmin,
+                        'items' => [
+                            [
+                                'label' => 'Create User',
+                                'url' => '/site/signup',
+                                'icon' => 'fas fa-user-plus',
+                            ],
+
                         ],
                         'active' => true,
                         'expanded' => true,
