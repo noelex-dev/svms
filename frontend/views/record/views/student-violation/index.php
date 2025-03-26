@@ -15,7 +15,7 @@ echo $this->render('@frontend/views/_components/_modal');
 $this->title = 'Student Violations';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-violation-index">
+<div class="student-violation-index px-4">
 
     <p>
         <?= Html::a('Add', '#', [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'pager' => [
             'options' => ['class' => 'pagination justify-content-center'],
             'linkContainerOptions' => ['class' => 'page-item'],

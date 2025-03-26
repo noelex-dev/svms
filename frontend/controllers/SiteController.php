@@ -28,7 +28,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['signup'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['Administrator'],
                     ],
                     [
                         'actions' => ['logout'],
@@ -46,6 +46,15 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if (Yii::$app->user->isGuest && $action->id !== 'login' && $this->id !== 'site') {
+            Yii::$app->response->redirect(['site/login']);
+            return false;
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actions()
     {
         return [
@@ -61,7 +70,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('/site/index');
     }
 
     public function actionLogin()
@@ -86,7 +95,8 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        Yii::$app->response->redirect(['site/login']);
+        return false;
     }
 
     public function actionContact()

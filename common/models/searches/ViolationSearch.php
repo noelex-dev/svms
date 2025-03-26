@@ -5,45 +5,28 @@ namespace common\models\searches;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Violation;
+use common\models\ViolationType;
 
-/**
- * ViolationSearch represents the model behind the search form of `common\models\Violation`.
- */
 class ViolationSearch extends Violation
 {
-    /**
-     * {@inheritdoc}
-     */
+    public $violationTypeName;
+
     public function rules()
     {
         return [
             [['id', 'violation_type_id', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'violationTypeName'], 'safe'],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     * @param string|null $formName Form name to be used into `->load()` method.
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params, $formName = null)
     {
-        $query = Violation::find();
-
-        // add conditions that should always apply here
+        $query = Violation::find()->joinWith('violationType');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,12 +35,9 @@ class ViolationSearch extends Violation
         $this->load($params, $formName);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'violation_type_id' => $this->violation_type_id,
@@ -66,7 +46,18 @@ class ViolationSearch extends Violation
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', ViolationType::tableName() . '.name', $this->violationTypeName]);
 
         return $dataProvider;
+    }
+
+    public function getViolation()
+    {
+        return $this->hasOne(Violation::class, ['id' => 'violation_id']);
+    }
+
+    public function getViolationType()
+    {
+        return $this->hasOne(ViolationType::class, ['id' => 'violation_type_id']);
     }
 }

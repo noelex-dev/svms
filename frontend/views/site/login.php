@@ -1,19 +1,24 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
-/** @var \common\models\LoginForm $model */
+use yii\bootstrap4\Html;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 
-use yii\bootstrap5\Html;
-use yii\bootstrap5\ActiveForm;
-
-// $this->title = 'Login';
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-
-    <div class="row">
-        <div class="col-lg-5">
+<div class="site-login" style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/school_2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-direction: column; /* Stack logo and form vertically */
+">
+    <img src="<?= Url::to('@web/Logo.jpg') ?>" alt="DEFEMNHS Logo" class="brand-image img-circle elevation-3" style="width: 150px; height: 150px; margin-bottom: 20px; border-radius: 50%; object-fit: cover;">
+    <div class="row col-lg-3">
+        <div class="col-lg-12" style="background-color: white; padding: 20px; border-radius: 8px;">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -22,14 +27,8 @@ use yii\bootstrap5\ActiveForm;
 
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-            <!-- <div class="my-1 mx-0" style="color:#999;">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                <br>
-                Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-            </div> -->
-
             <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-primary w-100', 'name' => 'login-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

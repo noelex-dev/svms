@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'pager' => [
             'options' => ['class' => 'pagination justify-content-center'],
             'linkContainerOptions' => ['class' => 'page-item'],

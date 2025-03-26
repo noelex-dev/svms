@@ -52,9 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
             [
-                'attribute' => 'violation_type_id',
+                'attribute' => 'violationTypeName',
                 'value' => function ($model) {
-                    return $model->violationType->name;
+                    return $model->violationType ? $model->violationType->name : null;
                 }
             ],
 

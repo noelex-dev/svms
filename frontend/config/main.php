@@ -57,6 +57,7 @@ return [
             'site/logout',
             'site/error',
             'admin/*',
+            '*',
         ],
     ],
     'params' => $params,

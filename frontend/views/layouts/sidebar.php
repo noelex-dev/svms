@@ -2,6 +2,9 @@
 
 use yii\helpers\Url;
 
+
+$roles = !Yii::$app->user->isGuest ? Yii::$app->authManager->getRolesByUser(Yii::$app->user->id) : [];
+$isAdmin = isset($roles['Administrator']);
 ?>
 
 <aside class="main-sidebar sidebar-dark-maroon elevation-4">
@@ -10,7 +13,7 @@ use yii\helpers\Url;
         <div class="d-flex justify-content-center align-items-center">
             <a href="<?= Url::base() ?>" class="d-flex justify-content-center align-items-center">
                 <!-- @web/Logo.jpg DEFEMNHS -->
-                <img src=" <?= Url::to('') ?>" alt="Logo" class="brand-image img-circle elevation-3" style="display: block; width: 70%; height: auto;">
+                <img src=" <?= Url::to('@web/Logo.jpg') ?>" alt="DEFEMNHS Logo" class="brand-image img-circle elevation-3" style="display: block; width: 70%; height: auto;">
             </a>
         </div>
     </div>
@@ -23,20 +26,24 @@ use yii\helpers\Url;
 
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
+                    // [
+                    //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
+                    //     'visible' => $isAdmin,
+                    // ],
                     [
                         'label' => 'Dashboard',
-                        'url' => '#',
+                        'url' => '/record/dashboard/index',
                         'icon' => 'fas fa-chart-line',
-                        'visible' => !Yii::$app->user->isGuest,
+                        'visible' => $isAdmin,
                     ],
-                    [
-                        'template' => '<div class="dropdown-divider p-0 b-0"></div>',
-                        'visible' => !Yii::$app->user->isGuest,
-                    ],
+                    // [
+                    //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
+                    //     'visible' => $isAdmin,
+                    // ],
                     [
                         'label' => 'Content Management',
                         'icon' => 'fas fa-cogs',
-                        'visible' => !Yii::$app->user->isGuest,
+                        'visible' => $isAdmin,
                         'items' => [
                             [
                                 'label' => 'Semester',
@@ -85,14 +92,14 @@ use yii\helpers\Url;
                         'active' => true,
                         'expanded' => true,
                     ],
-                    [
-                        'template' => '<div class="dropdown-divider"></div>',
-                        'visible' => !Yii::$app->user->isGuest,
-                    ],
+                    // [
+                    //     'template' => '<div class="dropdown-divider"></div>',
+                    //     'visible' => $isAdmin,
+                    // ],
                     [
                         'label' => 'Records',
                         'icon' => 'fas fa-laptop',
-                        'visible' => !Yii::$app->user->isGuest,
+                        'visible' => $isAdmin,
                         'items' => [
                             [
                                 'label' => 'Students',

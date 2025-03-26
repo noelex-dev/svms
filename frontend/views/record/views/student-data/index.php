@@ -12,7 +12,7 @@ echo $this->render('@frontend/views/_components/_modal');
 $this->title = 'Student List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-data-index">
+<div class="student-data-index px-4">
 
     <p>
         <?= Html::a('Add', '/record/student-data/create', [
@@ -51,33 +51,36 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-                'attribute' => 'personal_information_id',
+                'attribute' => 'studentName',
                 'label' => 'Student Name',
                 'value' => function ($model) {
                     return $model->personalInformation->fullName;
                 },
             ],
             [
-                'attribute' => 'guardian_id',
+                'attribute' => 'guardianName',
                 'label' => 'Guardian Name',
                 'value' => function ($model) {
                     return $model->guardian->personalInformation->fullName;
                 },
             ],
             [
-                'attribute' => 'grade_level_id',
+                'attribute' => 'gradeLevelName',
+                'label' => 'Grade Level',
                 'value' => function ($model) {
                     return $model->gradeLevel->name;
                 }
             ],
             [
-                'attribute' => 'section_id',
+                'attribute' => 'sectionName',
+                'label' => 'Section',
                 'value' => function ($model) {
                     return $model->section->name;
                 }
             ],
             [
-                'attribute' => 'strand_id',
+                'attribute' => 'strandName',
+                'label' => 'Strand',
                 'value' => function ($model) {
                     return $model->strand->name;
                 }
