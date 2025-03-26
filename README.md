@@ -11,7 +11,7 @@ composer install
 
 create new DATABASE naming 'db_svms'
 ```bash
-php yii migrate --migrationPath=@yii/rbac/migrations --interactive=0 && php yii migrate --interactive=0
+php yii migrate/fresh --migrationPath=@yii/rbac/migrations --interactive=0; php yii migrate --interactive=0
 ```
 
 cd {project_directory}/frontend/web
