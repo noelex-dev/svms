@@ -50,7 +50,7 @@ class StudentData extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'lrn' => 'Learner Reference Number',
+            'lrn' => 'Learner Reference Number (LRN)',
             'personal_information_id' => 'Personal Information ID',
             'student_information_id' => 'Student Information ID',
             'guardian_id' => 'Guardian ID',
