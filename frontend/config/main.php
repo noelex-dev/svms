@@ -51,15 +51,36 @@ return [
         ],
     ],
     'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'site/login',
-            'site/logout',
-            'site/error',
-            'admin/*',
-            '*',
+        'class' => \yii\filters\AccessControl::class,
+        'rules' => [
+            [
+                'allow' => true,
+                'actions' => ['error'],
+                'controllers' => ['site'],
+                'roles' => ['?'],
+            ],
+            [
+                'allow' => true,
+                'actions' => ['login'],
+                'controllers' => ['site'],
+                'roles' => ['?'],
+            ],
+            [
+                'allow' => true,
+                'actions' => ['logout'],
+                'controllers' => ['site'],
+                'roles' => ['@'],
+            ],
+            [
+                'allow' => true,
+                'controllers' => ['admin'],
+                'roles' => ['admin'],
+            ],
+            [   //allow all
+                'allow' => true,
+                'roles' => ['@'],
+            ],
         ],
     ],
     'params' => $params,
-
 ];
