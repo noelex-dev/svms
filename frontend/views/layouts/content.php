@@ -39,7 +39,7 @@ use yii\bootstrap4\Breadcrumbs;
     </div>
 <?php else: ?>
     <div class="content-wrapper">
-        <div class="content p-0">
+        <div class="content p-0 m-0">
             <?= $content ?>
         </div>
     </div>
