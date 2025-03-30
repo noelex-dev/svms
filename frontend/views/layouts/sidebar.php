@@ -35,6 +35,50 @@ $isAdmin = isset($roles['Administrator']);
                     //     'visible' => $isAdmin,
                     // ],
                     [
+                        'label' => 'Records',
+                        'icon' => 'fas fa-laptop',
+                        'visible' => $isAdmin,
+                        'items' => [
+                            [
+                                'label' => 'Dashboard',
+                                'url' => '/record/dashboard/index',
+                                'icon' => 'fas fa-chart-line',
+                            ],
+                            [
+                                'label' => 'Students',
+                                'url' => ['/record/student-data/index'],
+                                'icon' => 'fas fa-user-graduate'
+                            ],
+                            [
+                                'label' => 'Student Violation',
+                                'url' => ['/record/student-violation/index'],
+                                'icon' => 'fas fa-user-times'
+                            ],
+                            [
+                                'label' => 'Teacher Advisory',
+                                'url' => ['/record/teacher-advisory-assignment/index'],
+                                'icon' => 'fas fa-chalkboard-teacher'
+                            ],
+                        ],
+                        'active' => true,
+                        'expanded' => true,
+                    ],
+                    [
+                        'label' => 'User Management',
+                        'icon' => 'fas fa-user',
+                        'visible' => $isAdmin,
+                        'items' => [
+                            [
+                                'label' => 'Create User',
+                                'url' => '/site/signup',
+                                'icon' => 'fas fa-user-plus',
+                            ],
+
+                        ],
+                        'active' => true,
+                        'expanded' => true,
+                    ],
+                    [
                         'label' => 'Content Management',
                         'icon' => 'fas fa-cogs',
                         'visible' => $isAdmin,
@@ -90,50 +134,7 @@ $isAdmin = isset($roles['Administrator']);
                     //     'template' => '<div class="dropdown-divider"></div>',
                     //     'visible' => $isAdmin,
                     // ],
-                    [
-                        'label' => 'Records',
-                        'icon' => 'fas fa-laptop',
-                        'visible' => $isAdmin,
-                        'items' => [
-                            [
-                                'label' => 'Dashboard',
-                                'url' => '/record/dashboard/index',
-                                'icon' => 'fas fa-chart-line',
-                            ],
-                            [
-                                'label' => 'Students',
-                                'url' => ['/record/student-data/index'],
-                                'icon' => 'fas fa-user-graduate'
-                            ],
-                            [
-                                'label' => 'Student Violation',
-                                'url' => ['/record/student-violation/index'],
-                                'icon' => 'fas fa-user-times'
-                            ],
-                            [
-                                'label' => 'Teacher Advisory',
-                                'url' => ['/record/teacher-advisory-assignment/index'],
-                                'icon' => 'fas fa-chalkboard-teacher'
-                            ],
-                        ],
-                        'active' => true,
-                        'expanded' => true,
-                    ],
-                    [
-                        'label' => 'User Management',
-                        'icon' => 'fas fa-user',
-                        'visible' => $isAdmin,
-                        'items' => [
-                            [
-                                'label' => 'Create User',
-                                'url' => '/site/signup',
-                                'icon' => 'fas fa-user-plus',
-                            ],
 
-                        ],
-                        'active' => true,
-                        'expanded' => true,
-                    ],
                 ],
             ]);
             ?>

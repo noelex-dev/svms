@@ -48,7 +48,7 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        if (Yii::$app->user->isGuest && $action->id !== 'login' && $this->id !== 'site') {
+        if (Yii::$app->user->isGuest && $action->id !== 'login') {
             Yii::$app->response->redirect(['site/login']);
             return false;
         }
@@ -70,7 +70,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('/site/index');
+        return $this->render('index');
     }
 
     public function actionLogin()
