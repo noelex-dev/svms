@@ -37,8 +37,10 @@ use yii\bootstrap4\Breadcrumbs;
             <?= $content ?>
         </div>
     </div>
-<?php elseif (Yii::$app->user->isGuest): ?>
-    <div class="content p-0 m-0">
-        <?= $content ?>
+<?php else: ?>
+    <div class="content-wrapper">
+        <div class="content p-0 m-0">
+            <?= $content ?>
+        </div>
     </div>
 <?php endif; ?>
