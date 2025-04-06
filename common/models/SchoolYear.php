@@ -27,7 +27,6 @@ class SchoolYear extends \yii\db\ActiveRecord
         ];
     }
 
-
     public function behaviors()
     {
         return [
@@ -40,7 +39,6 @@ class SchoolYear extends \yii\db\ActiveRecord
             ],
         ];
     }
-
 
     public function attributeLabels()
     {

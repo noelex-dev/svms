@@ -45,7 +45,7 @@ class ViolationSearch extends Violation
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', Violation::tableName() . '.name', $this->name]);
         $query->andFilterWhere(['like', ViolationType::tableName() . '.name', $this->violationTypeName]);
 
         return $dataProvider;

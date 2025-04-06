@@ -61,7 +61,7 @@ class StrandController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('create', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }

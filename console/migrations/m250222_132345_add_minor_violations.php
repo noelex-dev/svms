@@ -20,7 +20,7 @@ class m250222_132345_add_minor_violations extends Migration
             ['Tardiness', $minorOffensesTypeId],
             ['Failure to bring excuse letter from absence.', $minorOffensesTypeId],
             ['Petty quarrels with classmates', $minorOffensesTypeId],
-            ["Leaving the classroom without the teacher\'s permission.", $minorOffensesTypeId],
+            ["Leaving the classroom without the teacher's permission.", $minorOffensesTypeId],
             ['Playing harmful practical jokes.', $minorOffensesTypeId],
             ['Use of mobile phones and electronic devices during classes (the teacher has the right to confiscate them when used during his/her class. Only the parent/guardian can claim them.', $minorOffensesTypeId],
             ['Cutting Classes', $minorOffensesTypeId],

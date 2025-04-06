@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $model->id;
             ]) ?>
         </p>
         <p style="margin-right: 24px;">
-            <?= Html::a('Export Anecdotal', '#', [
+            <?= Html::a('Export', '#', [
                 'class' => 'btn btn-success',
                 'id' => 'modalButton',
                 // 'data-title' => 'Update Student Data: ' . $model->personalInformation->fullName,
@@ -71,6 +71,13 @@ $this->params['breadcrumbs'][] = $model->id;
                     'label' => 'School Year',
                     'value' => function ($model) {
                         return $model->schoolYear->name;
+                    }
+                ],
+                [
+                    'attribute' => 'adviser_id',
+                    'label' => 'Adviser',
+                    'value' => function ($model) {
+                        return $model->adviser->personalInformation->fullName;
                     }
                 ],
                 [

@@ -3,16 +3,21 @@
 namespace frontend\views\record\controllers;
 
 use common\models\ActiveSchoolYearSem;
+use common\models\GradeLevel;
 use common\models\PersonalInformation;
 use common\models\StudentData;
 use common\models\searches\StudentDataSearch;
+use common\models\Section;
+use common\models\Strand;
 use common\models\StudentGuardian;
 use common\models\StudentInformation;
 use common\models\StudentPlan;
+use common\models\TeacherAdvisoryAssignment;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 class StudentDataController extends Controller
 {
@@ -57,6 +62,22 @@ class StudentDataController extends Controller
         $studentPlan = new StudentPlan();
         $studentGuardian = new StudentGuardian();
         $guardianPersonalInfo = new PersonalInformation();
+
+        $studentData->school_year_id = ActiveSchoolYearSem::getActiveSchoolYearId();
+
+        $teacherId = Yii::$app->user->id;
+
+        $assignment = TeacherAdvisoryAssignment::find()
+            ->where(['user_id' => $teacherId])
+            ->andWhere(['school_year_id' => $studentData->school_year_id])
+            ->one();
+
+        if ($assignment) {
+            $studentData->adviser_id = $assignment->user_id;
+            $studentData->grade_level_id = $assignment->grade_level_id;
+            $studentData->strand_id = $assignment->strand_id;
+            $studentData->section_id = $assignment->section_id;
+        }
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
@@ -105,7 +126,7 @@ class StudentDataController extends Controller
             }
         }
 
-        return $this->renderAjax('create', [
+        return $this->renderAjax('_form', [
             'studentDataModel' => $studentData,
             'studentPersonalInformationModel' => $studentPersonalInfo,
             'studentInformationModel' => $studentInfo,

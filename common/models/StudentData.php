@@ -5,11 +5,9 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use yii\helpers\ArrayHelper;
 
 class StudentData extends \yii\db\ActiveRecord
 {
-
     public static function tableName()
     {
         return 'student_data';
@@ -19,10 +17,11 @@ class StudentData extends \yii\db\ActiveRecord
     {
         return [
             [['guardian_id'], 'default', 'value' => null],
-            [['personal_information_id', 'student_information_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id', 'lrn'], 'required'],
+            [['lrn', 'adviser_id', 'personal_information_id', 'student_information_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id'], 'required'],
+            [['adviser_id', 'personal_information_id', 'student_information_id', 'guardian_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id', 'created_at', 'updated_at'], 'integer'],
+            [['lrn'], 'string', 'max' => 255],
             [['lrn'], 'unique'],
-            [['lrn'], 'string'],
-            [['personal_information_id', 'student_information_id', 'guardian_id', 'student_plan_id', 'grade_level_id', 'section_id', 'strand_id', 'school_year_id', 'created_at', 'updated_at'], 'integer'],
+            [['adviser_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['adviser_id' => 'id']],
             [['grade_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GradeLevel::class, 'targetAttribute' => ['grade_level_id' => 'id']],
             [['guardian_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentGuardian::class, 'targetAttribute' => ['guardian_id' => 'id']],
             [['personal_information_id'], 'exist', 'skipOnError' => true, 'targetClass' => PersonalInformation::class, 'targetAttribute' => ['personal_information_id' => 'id']],
@@ -51,6 +50,7 @@ class StudentData extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'adviser_id' => 'Adviser',
             'lrn' => 'Learner Reference Number (LRN)',
             'personal_information_id' => 'Personal Information ID',
             'student_information_id' => 'Student Information ID',
@@ -63,6 +63,11 @@ class StudentData extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getAdviser()
+    {
+        return $this->hasOne(User::class, ['id' => 'adviser_id']);
     }
 
     public function getGradeLevel()

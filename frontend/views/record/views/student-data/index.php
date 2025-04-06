@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="student-data-index px-4">
 
     <p>
-        <?= Html::a('Add', '/record/student-data/create', [
+        <?= Html::a('Add', '#', [
             'class' => 'btn btn-primary bg-maroon px-5',
             'id' => 'modalButton',
             'data-title' => 'Add Student Data',

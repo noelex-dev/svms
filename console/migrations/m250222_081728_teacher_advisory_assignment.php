@@ -9,6 +9,7 @@ class m250222_081728_teacher_advisory_assignment extends Migration
     private $gradeLevelRefereceTable = '{{%grade_level}}';
     private $sectionRefereceTable = '{{%section}}';
     private $strandRefereceTable = '{{%strand}}';
+    private $schoolYearReferenceTable = '{{%school_year}}';
 
     public function safeUp()
     {
@@ -23,6 +24,7 @@ class m250222_081728_teacher_advisory_assignment extends Migration
             [
                 'id' => $this->primaryKey(),
                 'user_id' => $this->integer()->notNull(),
+                'school_year_id' => $this->integer()->notNull(),
                 'grade_level_id' => $this->integer()->notNull(),
                 'section_id' => $this->integer()->notNull(),
                 'strand_id' => $this->integer()->notNull(),
@@ -40,6 +42,16 @@ class m250222_081728_teacher_advisory_assignment extends Migration
             ['id'],
             'NO ACTION',
             'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'svms_teacher_advisory_assignment-school_year_id_fk',
+            $this->table,
+            ['school_year_id'],
+            $this->schoolYearReferenceTable,
+            ['id'],
+            'NO ACTION',
+            'NO ACTION'
         );
 
         $this->addForeignKey(
@@ -76,6 +88,7 @@ class m250222_081728_teacher_advisory_assignment extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('svms_teacher_advisory_assignment-user_id_fk', $this->table);
+        $this->dropForeignKey('svms_teacher_advisory_assignment-school_year_id_fk', $this->table);
         $this->dropForeignKey('svms_teacher_advisory_assignment-grade_level_id_fk', $this->table);
         $this->dropForeignKey('svms_teacher_advisory_assignment-section_id_fk', $this->table);
         $this->dropForeignKey('svms_teacher_advisory_assignment-strand_id_fk', $this->table);

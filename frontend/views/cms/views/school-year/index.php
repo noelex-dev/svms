@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="school-year-index px-4">
 
     <p>
-        <?= Html::a('Add', '#', [
+        <?= Html::a('Add', Url::to(['/cms/school-year/create']), [
             'class' => 'btn btn-primary bg-maroon px-5',
             'id' => 'modalButton',
             'data-title' => 'Add School Year',

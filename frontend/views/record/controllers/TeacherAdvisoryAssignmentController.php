@@ -2,8 +2,10 @@
 
 namespace frontend\views\record\controllers;
 
+use common\models\ActiveSchoolYearSem;
 use common\models\TeacherAdvisoryAssignment;
 use common\models\searches\TeacherAdvisoryAssignmentSearch;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,6 +49,8 @@ class TeacherAdvisoryAssignmentController extends Controller
     {
         $model = new TeacherAdvisoryAssignment();
 
+        $model->school_year_id = ActiveSchoolYearSem::getActiveSchoolYearId();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -55,7 +59,7 @@ class TeacherAdvisoryAssignmentController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('create', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }

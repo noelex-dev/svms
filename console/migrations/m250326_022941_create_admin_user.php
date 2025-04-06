@@ -12,7 +12,29 @@ class m250326_022941_create_admin_user extends Migration
         $adminRole = $auth->getRole('Administrator');
         if (!$adminRole) {
             $adminRole = $auth->createRole('Administrator');
+            $adminRole->description = 'Full access administrator';
             $auth->add($adminRole);
+        }
+
+        $principalRole = $auth->getRole('Principal');
+        if (!$principalRole) {
+            $principalRole = $auth->createRole('Principal');
+            $principalRole->description = 'School Principal';
+            $auth->add($principalRole);
+        }
+
+        $guidanceRole = $auth->getRole('Guidance');
+        if (!$guidanceRole) {
+            $guidanceRole = $auth->createRole('Guidance');
+            $guidanceRole->description = 'Guidance Counselor';
+            $auth->add($guidanceRole);
+        }
+
+        $teacherRole = $auth->getRole('Teacher');
+        if (!$teacherRole) {
+            $teacherRole = $auth->createRole('Teacher');
+            $teacherRole->description = 'Class Adviser';
+            $auth->add($teacherRole);
         }
 
         $passwordHash = Yii::$app->security->generatePasswordHash('password123');
@@ -59,9 +81,24 @@ class m250326_022941_create_admin_user extends Migration
 
         $this->delete('{{%user}}', ['username' => 'admin']);
 
-        $adminRole = $auth->getRole('admin');
+        $adminRole = $auth->getRole('Administrator');
         if ($adminRole) {
             $auth->remove($adminRole);
+        }
+
+        $principalRole = $auth->getRole('Principal');
+        if ($principalRole) {
+            $auth->remove($principalRole);
+        }
+
+        $guidanceRole = $auth->getRole('Guidance');
+        if ($guidanceRole) {
+            $auth->remove($guidanceRole);
+        }
+
+        $teacherRole = $auth->getRole('Teacher');
+        if ($teacherRole) {
+            $auth->remove($teacherRole);
         }
     }
 }

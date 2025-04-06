@@ -13,6 +13,7 @@ class m250222_064308_student_data extends Migration
     private $sectionRefereceTable = '{{%section}}';
     private $strandRefereceTable = '{{%strand}}';
     private $schoolyearRefereceTable = '{{%school_year}}';
+    private $adviserReferenceTable = '{{%user}}';
 
     public function safeUp()
     {
@@ -27,6 +28,7 @@ class m250222_064308_student_data extends Migration
             [
                 'id' => $this->primaryKey(),
                 'lrn' => $this->string()->notNull()->unique(),
+                'adviser_id' => $this->integer()->notNull(),
                 'personal_information_id' => $this->integer()->notNull(),
                 'student_information_id' => $this->integer()->notNull(),
                 'guardian_id' => $this->integer(),
@@ -39,6 +41,16 @@ class m250222_064308_student_data extends Migration
                 'updated_at' => $this->integer()->notNull(),
             ],
             $tableOptions
+        );
+
+        $this->addForeignKey(
+            'svms_student_data-adviser_id_fk',
+            $this->table,
+            ['adviser_id'],
+            $this->adviserReferenceTable,
+            ['id'],
+            'NO ACTION',
+            'NO ACTION'
         );
 
         $this->addForeignKey(
@@ -124,6 +136,7 @@ class m250222_064308_student_data extends Migration
 
     public function safeDown()
     {
+        $this->dropForeignKey('svms_student_data-adviser_id_fk', $this->table);
         $this->dropForeignKey('svms_student_data-personal_information_id_fk', $this->table);
         $this->dropForeignKey('svms_student_data-student_information_id_fk', $this->table);
         $this->dropForeignKey('svms_student_data-guardian_id_fk', $this->table);

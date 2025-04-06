@@ -59,16 +59,26 @@ class SchoolYearController extends Controller
                 $endDate = DateTime::createFromFormat('Y-m-d', $dates[1]);
 
                 if ($startDate && $endDate) {
-                    $model->year_start = $startDate->format('Y-m-d');
-                    $model->year_end = $endDate->format('Y-m-d');
-
                     $startYear = $startDate->format('Y');
                     $endYear = $endDate->format('Y');
+
+                    if ($startYear === $endYear) {
+                        Yii::$app->session->setFlash('error', 'Start year and end year must not be the same.');
+                        return $this->redirect(['index']);
+                    }
+
+                    $model->year_start = $startDate->format('Y-m-d');
+                    $model->year_end = $endDate->format('Y-m-d');
                     $model->name = $startYear . '-' . $endYear;
+
+                    if (SchoolYear::find()->where(['name' => $model->name])->exists()) {
+                        Yii::$app->session->setFlash('error', 'School year "' . $model->name . '" already exists.');
+                        return $this->redirect(['index']);
+                    }
                 }
             }
 
-            if ($model->save()) {
+            if (!$model->hasErrors() && $model->save()) {
                 $semesters = Semester::find()->all();
 
                 foreach ($semesters as $semester) {
@@ -76,18 +86,24 @@ class SchoolYearController extends Controller
                     $activeSem->school_year_id = $model->id;
                     $activeSem->semester_id = $semester->id;
                     $activeSem->is_active = 0;
+
                     if ($activeSem->save()) {
                         $msg = $model->name . ' - ' . $semester->name . ' was added successfully.';
                         Yii::$app->session->setFlash('success', $msg);
+                    } else {
+                        Yii::error($activeSem->errors, __METHOD__);
                     }
                 }
 
                 Yii::$app->session->setFlash('success', 'School-Year was added successfully.');
                 return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to save Semester. Please check the form for errors.');
+                return $this->redirect(['index']);
             }
         }
 
-        return $this->renderAjax('create', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }

@@ -38,20 +38,20 @@ $this->registerJsFile($publishedRes[1] . '/control_sidebar.js', ['depends' => '\
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php $this->registerCsrfMetaTags() ?>
-    <title="<?= Html::encode($this->title) ?>< /title>
-        <?php $this->head() ?>
-        <?php if (Yii::$app->user->isGuest): ?>
-            <style>
-                .content-wrapper {
-                    margin-left: 0 !important;
-                    background-color: #F4F6F9 !important;
-                }
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+    <?php if (Yii::$app->user->isGuest): ?>
+        <style>
+            .content-wrapper {
+                margin-left: 0 !important;
+                background-color: #F4F6F9 !important;
+            }
 
-                .breadcrumb {
-                    display: none;
-                }
-            </style>
-        <?php endif; ?>
+            .breadcrumb {
+                display: none;
+            }
+        </style>
+    <?php endif; ?>
 </head>
 
 <body class="hold-transition sidebar-mini">

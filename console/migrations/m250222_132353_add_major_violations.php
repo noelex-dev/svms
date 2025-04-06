@@ -22,7 +22,7 @@ class m250222_132353_add_major_violations extends Migration
             ['Tampering, alteration or misuse of academic or official records (report cards, form 137, clearances, excuse letter, etc.)', $majorOffensesTypeId],
             ['Forgery of signature of a person in authority or parent in an official communication.', $majorOffensesTypeId],
             ['Loitering in public places during class hours.', $majorOffensesTypeId],
-            ["Using somebody else\'s ID card.", $majorOffensesTypeId],
+            ["Using somebody elsex's ID card.", $majorOffensesTypeId],
             ['Exhibition and display of any obscene of pornographic magazine, pictures or videos within the school campus.', $majorOffensesTypeId],
             ['Gambling in any form in campus.', $majorOffensesTypeId],
             ['Encouraging others to violate school policies.', $majorOffensesTypeId],

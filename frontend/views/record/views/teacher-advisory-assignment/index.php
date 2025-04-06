@@ -10,13 +10,24 @@ use yii\bootstrap4\Modal;
 
 echo $this->render('@frontend/views/_components/_modal');
 
-$this->title = 'Teacher Advisory Assignment';
+$this->title = 'Teacher Advisory';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teacher-advisory-assignment-index px-4">
 
     <p>
-        <?= Html::a('Assign', ['create'], ['class' => 'btn btn-success px-5 bg-maroon']) ?>
+        <?= Html::a('Assign', '#', [
+            'class' => 'btn btn-primary bg-maroon px-5',
+            'id' => 'modalButton',
+            'data-title' => "Assign Teacher's Advisory",
+            'data-subtitle' => 'Please fill up the details below.',
+            'data-icon' => 'fas fa-chalkboard-teacher',
+            'data-url' => Url::to(['/record/teacher-advisory-assignment/create']),
+            'data-type' => 'POST',
+            'data-width' => Modal::SIZE_EXTRA_LARGE,
+            'data-toggle' => 'modal',
+            'data-target' => '#svmsModal',
+        ]) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -25,19 +36,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
+        'pager' => [
+            'options' => ['class' => 'pagination justify-content-center'],
+            'linkContainerOptions' => ['class' => 'page-item'],
+            'linkOptions' => ['class' => 'page-link'],
+            'disabledListItemSubTagOptions' => ['class' => 'page-link'],
+            'prevPageLabel' => 'Previous',
+            'nextPageLabel' => 'Next',
+        ],
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn',
-                'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                'contentOptions' => ['style' => 'width: 10%; text-align: center; vertical-align: middle;'],
+                'headerOptions' => ['style' => 'width: 5%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 5%; text-align: center; vertical-align: middle;'],
             ],
 
             [
                 'attribute' => 'user_id',
                 'label' => 'Teacher Name',
-                // 'value' => function ($model) {
-                //     // return $model->personalInformation->fullName;
-                // }
+                'value' => function ($model) {
+                    return $model->user->personalInformation->fullName;
+                }
             ],
             [
                 'attribute' => 'grade_level_id',

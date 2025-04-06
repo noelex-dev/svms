@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 class ActiveSchoolYearSem extends \yii\db\ActiveRecord
 {
@@ -56,5 +57,23 @@ class ActiveSchoolYearSem extends \yii\db\ActiveRecord
     public function getSemester()
     {
         return $this->hasOne(Semester::class, ['id' => 'semester_id']);
+    }
+
+    public static function getActiveSchoolYearId()
+    {
+        $active = self::find()->where(['is_active' => 1])->one();
+        return $active ? $active->school_year_id : null;
+    }
+
+    public static function getActiveSchoolYearDropdown()
+    {
+        $active = self::find()
+            ->with(['schoolYear', 'semester'])
+            ->where(['is_active' => 1])
+            ->all();
+
+        return ArrayHelper::map($active, 'school_year_id', function ($model) {
+            return $model->schoolYear->name . ' - ' . $model->semester->name;
+        });
     }
 }
