@@ -12,12 +12,18 @@ use common\models\Strand;
 use common\models\StudentGuardian;
 use common\models\StudentInformation;
 use common\models\StudentPlan;
+use common\models\StudentViolation;
 use common\models\TeacherAdvisoryAssignment;
+use DateTime;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class StudentDataController extends Controller
 {
@@ -230,5 +236,105 @@ class StudentDataController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionExportAnecdotal($studentId)
+    {
+        $model = $this->findModel($studentId);
+
+        if (!$model || !$model->personalInformation) {
+            Yii::$app->session->setFlash('error', 'Error: Could not retrieve student information for anecdotal report.');
+            return $this->redirect(['view', 'id' => $studentId]);
+        }
+
+        $templatePath = Yii::getAlias('@frontend/web/templates/anecdotal-template.xlsx');
+
+        $spreadsheet = IOFactory::load($templatePath);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('C5', $model->adviser->personalInformation->fullName ?? '-');
+        $sheet->setCellValue('C6', $model->studentClass ?? '-');
+        $sheet->setCellValue('A10', 'Name: ' . $model->personalInformation->fullName ?? '-');
+        $birthdate = '';
+        if ($model->personalInformation && $model->personalInformation->birthdate) {
+            $birthdate = new DateTime($model->personalInformation->birthdate);
+        }
+        $sheet->setCellValue('A11', 'Birth Date: ' . ($birthdate ? $birthdate->format('F d, Y') : '-'));
+        $sheet->setCellValue('E11', 'Birthplace: ' . $model->personalInformation->birthplace ?? '-');
+        $age = '';
+        if ($model->personalInformation && $model->personalInformation->birthdate) {
+            $birthDate = new DateTime($model->personalInformation->birthdate);
+            $currentDate = new DateTime('now', new \DateTimeZone('Asia/Manila'));
+            $interval = $currentDate->diff($birthDate);
+            $age = $interval->y;
+        }
+        $sheet->setCellValue('I11', 'Age: ' . $age ?? '');
+        $sheet->setCellValue('A13', 'Guardian: ' . $model->guardian->personalInformation->fullName ?? '-');
+        $sheet->setCellValue('E13', 'Occupation: ' . $model->guardian->occupation ?? '-');
+        $sheet->setCellValue('A14', 'Contact No.: ' . $model->guardian->contact_number ?? '-');
+        $sheet->setCellValue('E14', 'Guardian Relation: ' . $model->guardian->relationship->name ?? '-');
+        $sheet->setCellValue('A16', 'Language: ' . $model->studentInformation->language ?? '-');
+        $sheet->setCellValue('E16', 'Height: ' . $model->studentInformation->height ?? '-');
+        $sheet->setCellValue('I16', 'Weight: ' . $model->studentInformation->weight ?? '-');
+        $sheet->setCellValue('A17', 'Early Disease/s: ' . $model->studentInformation->early_disease ?? '-');
+        $sheet->setCellValue('E17', 'Serious Accidents: ' . $model->studentInformation->serious_accident ?? '-');
+        $sheet->setCellValue('A18', 'Hobby: ' . $model->studentInformation->hobby ?? '-');
+        $sheet->setCellValue('E18', 'Special Talents: ' . $model->studentInformation->special_talent ?? '-');
+        $sheet->setCellValue('A19', 'Subject/s Found Easy: ' . $model->studentInformation->easy_subject ?? '-');
+        $sheet->setCellValue('E19', 'Subject/s Found Difficult: ' . $model->studentInformation->hard_subject ?? '-');
+        $sheet->setCellValue('A21', 'Higher Education (College): ' . ($model->studentPlan->higher_education ? 'Yes' : 'No'));
+        $sheet->setCellValue('A22', 'Employment: ' . ($model->studentPlan->employment ? 'Yes' : 'No'));
+        $sheet->setCellValue('A23', 'Entrepreneurship: ' . ($model->studentPlan->entrepreneurship ? 'Yes' : 'No'));
+        $sheet->setCellValue('A24', 'Middle-level Skills (TESDA): ' . ($model->studentPlan->tesda ? 'Yes' : 'No'));
+
+        $studentViolations = StudentViolation::find()
+            ->where(['lrn_id' => $model->lrn])
+            ->all();
+
+        $rowStart = 28;
+        $row = $rowStart;
+        foreach ($studentViolations as $studentViolation) {
+            $sheet->insertNewRowBefore($row, 1);
+            $sheet->mergeCells('A' . ($row) . ':B' . ($row));
+            $sheet->mergeCells('D' . ($row) . ':E' . ($row));
+            $sheet->mergeCells('I' . ($row) . ':J' . ($row));
+            $sheet->setCellValue('A' . $row, $studentViolation->violation->name ?? '');
+            $createdAt = $studentViolation->created_at ? new DateTime('@' . $studentViolation->created_at) : null;
+            $sheet->setCellValue('C' . $row, $createdAt ? $createdAt->format('Y-M-d') : '-');
+            $sheet->setCellValue('D' . $row, $studentViolation->user->personalInformation->fullName ?? '-');
+
+            $violationType = $studentViolation->violation->violationType;
+            if ($violationType->id === 1) {
+                $sheet->setCellValue('F' . $row,  '/');
+            } else if ($violationType->id === 2) {
+                $sheet->setCellValue('G' . $row, '/');
+            }
+
+            $sheet->setCellValue('H' . $row, $studentViolation->is_settled ? 'Settled' : 'Unsettled');
+
+            $styleArray = [
+                'alignment' => [
+                    'wrapText' => false,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                ],
+            ];
+            $sheet->getStyle('A' . $row . ':B' . $row)->applyFromArray($styleArray);
+            $sheet->getStyle('A' . $row . ':B' . $row)->getAlignment()->setWrapText(true);
+            $sheet->getStyle('C' . $row . ':J' . $row)->getAlignment()->setWrapText(false);
+
+            $row++;
+        }
+
+        $sheet->removeRow($row);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Anecdotal_Record_' . $model->personalInformation->last_name . '_' . $model->personalInformation->first_name . '-' . time() . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        Yii::$app->end();
     }
 }

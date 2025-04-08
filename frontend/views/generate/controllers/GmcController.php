@@ -126,4 +126,6 @@ class GmcController extends Controller
         $writer->save('php://output');
         Yii::$app->end();
     }
+
+    public function actionGenerateAnecdotal($studentId) {}
 }

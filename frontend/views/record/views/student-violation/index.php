@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' => 'student_data_id',
+                'headerOptions' => ['style' => 'text-align: center;'],
                 'value' => function ($model) {
                     $studentModel = StudentData::findOne($model->student_data_id);
                     return $studentModel ? $studentModel->personalInformation->fullName : 'N/A';
@@ -62,14 +63,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'violation_id',
+                'headerOptions' => ['style' => 'width: 40%; text-align: center;'],
+                'contentOptions' => ['style' => 'width: 40%; text-align: center; vertical-align: middle;'],
                 'value' => function ($model) {
                     $violationModel = Violation::findOne($model->violation_id);
                     return $violationModel ? $violationModel->name : 'N/A';
                 }
             ],
             [
-                'label' => 'Violation Type',
                 'attribute' => 'violation_id',
+                'label' => 'Violation Type',
+                'headerOptions' => ['style' => 'text-align: center;'],
                 'value' => function ($model) {
                     $violationModel = Violation::findOne($model->violation_id);
                     return $violationModel ? $violationModel->violationType->name : 'N/A';
@@ -77,12 +81,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'notification_status',
+                'headerOptions' => ['style' => 'text-align: center;'],
                 'value' => function ($model) {
                     return $model->notification_status ? 'Notified' : 'Not Notified';
                 }
             ],
             [
+                'attribute' => 'created_at',
+                'headerOptions' => ['style' => 'text-align: center;'],
+                'value' => function ($model) {
+                    return date('F d, Y | h:i A', $model->created_at);
+                }
+            ],
+            [
                 'attribute' => 'is_settled',
+                'headerOptions' => ['style' => 'text-align: center;'],
                 'value' => function ($model) {
                     if ($model->is_settled === 1) {
                         return '<span class="text-md m-0 py-1" 

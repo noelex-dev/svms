@@ -38,17 +38,9 @@ $this->params['breadcrumbs'][] = $model->id;
             ]) ?>
         </p>
         <p style="margin-right: 24px;">
-            <?= Html::a('Export', '#', [
+            <?= Html::a('Export Anecdotal', ['/record/student-data/export-anecdotal', 'studentId' => $model->id], [
                 'class' => 'btn btn-success',
-                'id' => 'modalButton',
-                // 'data-title' => 'Update Student Data: ' . $model->personalInformation->fullName,
-                // 'data-subtitle' => 'Please fill up the details below.',
-                // 'data-icon' => 'fas fa-user-graduate',
-                // 'data-url' => Url::to(['/record/student-data/update', 'id' => $model->id]),
-                // 'data-type' => 'POST',
-                // 'data-width' => Modal::SIZE_EXTRA_LARGE,
-                // 'data-toggle' => 'modal',
-                // 'data-target' => '#svmsModal',
+                // 'target' => '_blank',
             ]) ?>
         </p>
 
@@ -64,6 +56,16 @@ $this->params['breadcrumbs'][] = $model->id;
                     'label' => 'Student Name',
                     'value' => function ($model) {
                         return $model->personalInformation->fullName;
+                    }
+                ],
+                [
+                    'attribute' => 'personal_information_id',
+                    'label' => 'Birth Date',
+                    'value' => function ($model) {
+                        if ($model->personalInformation && $model->personalInformation->birthdate) {
+                            return Yii::$app->formatter->asDate($model->personalInformation->birthdate, 'MMMM d, yyyy');
+                        }
+                        return null;
                     }
                 ],
                 [

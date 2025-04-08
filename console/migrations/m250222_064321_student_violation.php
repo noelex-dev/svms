@@ -9,6 +9,7 @@ class m250222_064321_student_violation extends Migration
     private $studentDataRefereceTable = '{{%student_data}}';
     private $userReferenceTable = '{{%user}}';
     private $schoolYearReferenceTabe = '{{%school_year}}';
+    private $violationReferenceTable = '{{%violation}}';
 
     public function safeUp()
     {
@@ -66,6 +67,16 @@ class m250222_064321_student_violation extends Migration
         );
 
         $this->addForeignKey(
+            'svms_student_violation-violation_id_fk',
+            $this->table,
+            ['violation_id'],
+            $this->violationReferenceTable,
+            ['id'],
+            'NO ACTION',
+            'NO ACTION',
+        );
+
+        $this->addForeignKey(
             'svms_student_violation-user_id_fk',
             $this->table,
             ['user_id'],
@@ -81,6 +92,7 @@ class m250222_064321_student_violation extends Migration
         $this->dropForeignKey('svms_student_violation-student_data_id_fk', $this->table);
         $this->dropForeignKey('svms_student_violation-lrn_id_fk', $this->table);
         $this->dropForeignKey('svms_student_violation-school_year_id_fk', $this->table);
+        $this->dropForeignKey('svms_student_violation-violation_id_fk', $this->table);
         $this->dropForeignKey('svms_student_violation-user_id_fk', $this->table);
         $this->dropTable($this->table);
     }
