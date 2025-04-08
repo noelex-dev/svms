@@ -77,7 +77,7 @@ use yii\bootstrap4\ActiveForm;
             'depends' => ['schoolYearDropdown', 'gradeDropdown', 'strandDropdown', 'sectionDropdown'],
             'url' => Url::to(['/record/student-violation/get-student-list']),
             'loadingText' => 'Loading students ...',
-            'initialize' => true,  // Ensure preselected value loads
+            'initialize' => true,
             'params' => ['studentDataId'],
         ],
     ])->label('Student Name') ?>

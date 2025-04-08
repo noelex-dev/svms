@@ -12,6 +12,7 @@ class StudentViolationSearch extends StudentViolation
     {
         return [
             [['id', 'student_data_id', 'violation_id', 'notification_status', 'user_id', 'is_settled', 'created_at', 'updated_at'], 'integer'],
+            [['lrn_id'], 'string'],
         ];
     }
 
@@ -36,6 +37,7 @@ class StudentViolationSearch extends StudentViolation
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'lrn_id' => $this->lrn_id,
             'student_data_id' => $this->student_data_id,
             'violation_id' => $this->violation_id,
             'notification_status' => $this->notification_status,

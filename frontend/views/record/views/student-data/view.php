@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Student Data', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $model->id;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="student-data-view">
+<div class="student-data-view px-4">
 
     <div class="row d-flex justify-content-between">
         <p style="margin-left: 24px;">

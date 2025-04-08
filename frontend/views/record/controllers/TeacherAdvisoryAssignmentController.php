@@ -5,10 +5,10 @@ namespace frontend\views\record\controllers;
 use common\models\ActiveSchoolYearSem;
 use common\models\TeacherAdvisoryAssignment;
 use common\models\searches\TeacherAdvisoryAssignmentSearch;
-use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class TeacherAdvisoryAssignmentController extends Controller
 {
@@ -21,6 +21,15 @@ class TeacherAdvisoryAssignmentController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['Administrator', 'Principal', 'Guidance'],
+                        ],
                     ],
                 ],
             ]

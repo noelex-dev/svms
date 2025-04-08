@@ -2,6 +2,8 @@
 
 namespace frontend\views\record\controllers;
 
+use common\models\ActiveSchoolYearSem;
+use common\models\SchoolYear;
 use common\models\StudentViolation;
 use common\models\searches\StudentViolationSearch;
 use common\models\StudentData;
@@ -11,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\filters\AccessControl;
 
 class StudentViolationController extends Controller
 {
@@ -23,6 +26,20 @@ class StudentViolationController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'roles' => ['Principal'],
+                        ],
+                        [
+                            'allow' => true,
+                            'roles' => ['Teacher', 'Guidance'],
+                        ],
                     ],
                 ],
             ]
@@ -53,6 +70,19 @@ class StudentViolationController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $studentData = StudentData::findOne($model->student_data_id);
+                if ($studentData) {
+                    $model->lrn_id = $studentData->lrn;
+                } else {
+                    $model->addError('student_data_id', 'Invalid Student.');
+                    return $this->renderAjax('create', [
+                        'model' => $model,
+                    ]);
+                }
+
+                $model->school_year_id = ActiveSchoolYearSem::getActiveSchoolYearId();
+                $model->user_id = Yii::$app->user->id;
+
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Student Violation was added successfully.');
                     return $this->redirect(['view', 'id' => $model->id]);

@@ -56,6 +56,20 @@ use yii\helpers\Url;
                         'expanded' => true,
                     ],
                     [
+                        'label' => 'Certificate',
+                        'icon' => 'fas fa-certificate',
+                        'items' => [
+                            [
+                                'label' => 'Good Moral',
+                                'url' => '/generate/gmc/index',
+                                'icon' => 'fas fa-file-invoice',
+                                'visible' =>  Yii::$app->user->can('Guidance') || Yii::$app->user->can('Administrator'),
+                            ],
+                        ],
+                        'active' => true,
+                        'expanded' => true,
+                    ],
+                    [
                         'label' => 'User Management',
                         'icon' => 'fas fa-user',
                         'visible' => Yii::$app->user->can('Administrator') || Yii::$app->user->can('Guidance'),

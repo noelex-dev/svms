@@ -23,9 +23,11 @@ class StudentViolation extends \yii\db\ActiveRecord
         return [
             [['schoolYear', 'grade', 'strand', 'section', 'user_id'], 'safe'],
             [['notification_status', 'is_settled'], 'default', 'value' => 0],
-            [['student_data_id', 'violation_id'], 'required'],
-            [['student_data_id', 'violation_id', 'notification_status', 'user_id', 'is_settled', 'created_at', 'updated_at'], 'integer'],
+            [['student_data_id', 'violation_id', 'lrn_id', 'school_year_id'], 'required'],
+            [['lrn_id'], 'string'],
+            [['student_data_id', 'violation_id', 'notification_status', 'user_id', 'is_settled', 'school_year_id', 'created_at', 'updated_at'], 'integer'],
             [['student_data_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentData::class, 'targetAttribute' => ['student_data_id' => 'id']],
+            [['lrn_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentData::class, 'targetAttribute' => ['lrn_id' => 'lrn']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -47,6 +49,7 @@ class StudentViolation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'lrn_id' => 'LRN',
             'student_data_id' => 'Student Name',
             'violation_id' => 'Violation',
             'notification_status' => 'Guardian Notified',
@@ -66,6 +69,17 @@ class StudentViolation extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StudentData::class, ['id' => 'student_data_id']);
     }
+
+    public function getStudentDataLrn()
+    {
+        return $this->hasOne(StudentData::class, ['lrn' => 'lrn_id']);
+    }
+
+    public function getSchoolYear()
+    {
+        return $this->hasOne(SchoolYear::class, ['id' => 'school_year_id']);
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);

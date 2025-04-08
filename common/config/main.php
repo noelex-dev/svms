@@ -24,6 +24,9 @@ return [
         'record' => [
             'class' => 'frontend\views\record\Module',
         ],
+        'generate' => [
+            'class' => 'frontend\views\generate\Module',
+        ],
     ],
     'timeZone' => 'Asia/Manila',
 ];
