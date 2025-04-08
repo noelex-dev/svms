@@ -41,15 +41,20 @@ use \yii\helpers\Url;
 
 
         <li class="nav-item">
-            <?= Html::a(
-                '<i class="fas fa-sign-out-alt"></i> <span class="ml-1">Logout</span>',
-                ['/site/logout'],
-                [
-                    'data-method' => 'post',
-                    'class' => 'nav-link',
-                    'title' => 'Logout',
-                ]
-            ) ?>
+            <div class="row">
+                <u class="nav-link  py-2 px-0"><?= Yii::$app->user->identity->username ?></u>
+                <div>
+                    <?= Html::a(
+                        '<i class="fas fa-sign-out-alt"></i> <span class="ml-1">Logout</span>',
+                        ['/site/logout'],
+                        [
+                            'data-method' => 'post',
+                            'class' => 'nav-link',
+                            'title' => 'Logout',
+                        ]
+                    ) ?>
+                </div>
+            </div>
         </li>
     </ul>
 </nav>

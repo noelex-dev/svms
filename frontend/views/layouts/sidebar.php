@@ -2,9 +2,6 @@
 
 use yii\helpers\Url;
 
-
-$roles = !Yii::$app->user->isGuest ? Yii::$app->authManager->getRolesByUser(Yii::$app->user->id) : [];
-$isAdmin = isset($roles['Administrator']);
 ?>
 
 <aside class="main-sidebar sidebar-dark-maroon elevation-4">
@@ -26,38 +23,33 @@ $isAdmin = isset($roles['Administrator']);
 
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    // [
-                    //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
-                    //     'visible' => $isAdmin,
-                    // ],
-                    // [
-                    //     'template' => '<div class="dropdown-divider p-0 b-0"></div>',
-                    //     'visible' => $isAdmin,
-                    // ],
                     [
                         'label' => 'Records',
                         'icon' => 'fas fa-laptop',
-                        'visible' => $isAdmin,
                         'items' => [
                             [
                                 'label' => 'Dashboard',
                                 'url' => '/record/dashboard/index',
                                 'icon' => 'fas fa-chart-line',
+                                'visible' => Yii::$app->user->can('Teacher') || Yii::$app->user->can('Guidance') || Yii::$app->user->can('Principal') || Yii::$app->user->can('Administrator'),
                             ],
                             [
                                 'label' => 'Students',
                                 'url' => ['/record/student-data/index'],
-                                'icon' => 'fas fa-user-graduate'
+                                'icon' => 'fas fa-user-graduate',
+                                'visible' => Yii::$app->user->can('Teacher') || Yii::$app->user->can('Principal') || Yii::$app->user->can('Administrator'),
                             ],
                             [
                                 'label' => 'Student Violation',
                                 'url' => ['/record/student-violation/index'],
-                                'icon' => 'fas fa-user-times'
+                                'icon' => 'fas fa-user-times',
+                                'visible' => Yii::$app->user->can('Teacher') || Yii::$app->user->can('Guidance') || Yii::$app->user->can('Principal') || Yii::$app->user->can('Administrator'),
                             ],
                             [
                                 'label' => 'Teacher Advisory',
                                 'url' => ['/record/teacher-advisory-assignment/index'],
-                                'icon' => 'fas fa-chalkboard-teacher'
+                                'icon' => 'fas fa-chalkboard-teacher',
+                                'visible' => Yii::$app->user->can('Principal') || Yii::$app->user->can('Administrator'),
                             ],
                         ],
                         'active' => true,
@@ -66,7 +58,7 @@ $isAdmin = isset($roles['Administrator']);
                     [
                         'label' => 'User Management',
                         'icon' => 'fas fa-user',
-                        'visible' => $isAdmin,
+                        'visible' => Yii::$app->user->can('Administrator') || Yii::$app->user->can('Guidance'),
                         'items' => [
                             [
                                 'label' => 'Create User',
@@ -81,7 +73,7 @@ $isAdmin = isset($roles['Administrator']);
                     [
                         'label' => 'Content Management',
                         'icon' => 'fas fa-cogs',
-                        'visible' => $isAdmin,
+                        'visible' => Yii::$app->user->can('Administrator') || Yii::$app->user->can('Guidance'),
                         'items' => [
                             [
                                 'label' => 'Semester',
@@ -130,10 +122,6 @@ $isAdmin = isset($roles['Administrator']);
                         'active' => true,
                         'expanded' => true,
                     ],
-                    // [
-                    //     'template' => '<div class="dropdown-divider"></div>',
-                    //     'visible' => $isAdmin,
-                    // ],
 
                 ],
             ]);

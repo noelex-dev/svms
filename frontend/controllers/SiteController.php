@@ -73,7 +73,10 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $username = Yii::$app->user->isGuest ? 'Guest' : Yii::$app->user->identity->username;
+        return $this->render('index', [
+            'username' => $username,
+        ]);
     }
 
     public function actionLogin()
